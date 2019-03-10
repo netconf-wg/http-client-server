@@ -1,0 +1,6 @@
+<http-server xmlns="urn:ietf:params:xml:ns:yang:ietf-http-server">
+  <http-keepalives>
+    <max-wait>30</max-wait>
+    <max-attempts>3</max-attempts>
+  </http-keepalives>
+</http-server>

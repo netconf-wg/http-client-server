@@ -1,6 +1,9 @@
 <http-server xmlns="urn:ietf:params:xml:ns:yang:ietf-http-server">
-  <http-keepalives>
-    <max-wait>30</max-wait>
-    <max-attempts>3</max-attempts>
-  </http-keepalives>
+  <http-server-parameters>
+    <server-name>foo.example.com</server-name>
+    <protocol-versions>
+      <protocol-version>HTTP/1.1</protocol-version>
+      <protocol-version>HTTP/2.0</protocol-version>
+    </protocol-versions>
+  </http-server-parameters>
 </http-server>

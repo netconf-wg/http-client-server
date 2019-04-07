@@ -61,8 +61,7 @@
         the first defines a grouping for configuring a generic HTTP client, and
         the second defines a grouping for configuring a generic HTTP server. It
         is intended that these groupings will be used by applications using
-        the HTTP protocol.  For instance, these groupings could help define
-        the configuration module for an SSH, TLS, or HTTP based application.</t>
+        the HTTP protocol.</t>
     </section>
 
     <section title="Terminology">
@@ -80,7 +79,7 @@
 
         <t><figure>
             <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/ietf-http-client-tree.txt)
+INSERT_TEXT_FROM_FILE(refs/ietf-http-client-tree-no-expand.txt)
 ]]></artwork>
           </figure></t>
       </section>
@@ -166,7 +165,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       nodes without proper protection can have a negative effect on network
       operations. These are the subtrees and data nodes and their
       sensitivity/vulnerability: <list hangIndent="6" style="hanging">
-          <t hangText="   NONE"/>
+          <t hangText="   FIXME: (pending - TBD)"/>
         </list></t>
 
       <t>Some of the readable data nodes in the YANG modules may be considered
@@ -174,7 +173,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       important to control read access (e.g., via get, get-config, or
       notification) to these data nodes. These are the subtrees and data nodes
       and their sensitivity/vulnerability: <list hangIndent="6" style="hanging">
-          <t hangText="   NONE"/>
+          <t hangText="   FIXME: (pending client auth params?)"/>
         </list></t>
 
       <t>Some of the RPC operations in this YANG module may be considered
@@ -182,7 +181,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       important to control access to these operations. These are the
       operations and their sensitivity/vulnerability: <list hangIndent="6"
           style="hanging">
-          <t hangText="   NONE"/>
+          <t hangText="   The modules defined in this document do not define any 'RPC' or 'action' statements."/>
         </list></t>
     </section>
 

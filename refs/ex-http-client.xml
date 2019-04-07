@@ -1,12 +1,11 @@
 <http-client xmlns="urn:ietf:params:xml:ns:yang:ietf-http-client">
-  <http-client-identity>
-    <basic>
-      <user-id>bob</user-id>
-      <password>secret</password>
-    </basic>
-  </http-client-identity>
-  <http-keepalives>
-    <max-wait>30</max-wait>
-    <max-attempts>3</max-attempts>
-  </http-keepalives>
+  <http-client-parameters>
+    <protocol-version>HTTP/1.1</protocol-version>
+    <client-identity>
+      <basic>
+        <user-id>bob</user-id>
+        <password>secret</password>
+      </basic>
+    </client-identity>
+  </http-client-parameters>
 </http-client>

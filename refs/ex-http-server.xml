@@ -1,9 +1,7 @@
 <http-server xmlns="urn:ietf:params:xml:ns:yang:ietf-http-server">
-  <http-server-parameters>
-    <server-name>foo.example.com</server-name>
-    <protocol-versions>
-      <protocol-version>HTTP/1.1</protocol-version>
-      <protocol-version>HTTP/2.0</protocol-version>
-    </protocol-versions>
-  </http-server-parameters>
+  <server-name>foo.example.com</server-name>
+  <protocol-versions>
+    <protocol-version>HTTP/1.1</protocol-version>
+    <protocol-version>HTTP/2.0</protocol-version>
+  </protocol-versions>
 </http-server>

@@ -1,15 +1,15 @@
 #!/bin/bash
 
-echo "Testing ietf-http-client (pyang)..."
+echo "Testing ietf-http-client.yang (pyang)..."
 pyang --ietf --max-line-length=69 -p ../ ../ietf-http-client\@*.yang
 
-echo "Testing ietf-http-client (yanglint)..."
+echo "Testing ietf-http-client.yang (yanglint)..."
 yanglint -p ../ ../ietf-http-client\@*.yang
 
-echo "Testing ietf-http-server (pyang)..."
+echo "Testing ietf-http-server.yang (pyang)..."
 pyang --ietf --max-line-length=69 -p ../ ../ietf-http-server\@*.yang
 
-echo "Testing ietf-http-server (yanglint)..."
+echo "Testing ietf-http-server.yang (yanglint)..."
 yanglint -p ../ ../ietf-http-server\@*.yang
 
 

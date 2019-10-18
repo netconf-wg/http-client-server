@@ -29,10 +29,11 @@
     <workgroup>NETCONF Working Group</workgroup>
 
     <abstract>
-      <t>This document defines two YANG modules: the first defines a grouping
-        for configuring a generic HTTP client, and the second defines a grouping
-        for configuring a generic HTTP server. It is intended that these
-        groupings will be used by applications using the HTTP protocol.</t>
+      <t>This document defines two YANG modules: the first defines a minimal
+        grouping for configuring a generic HTTP client, and the second defines
+        a minimal grouping for configuring a generic HTTP server. It is
+        intended that these groupings will be used and extended by
+        applications using the HTTP protocol.</t>
     </abstract>
 
     <note title="Editorial Note (To be removed by RFC Editor)">
@@ -97,13 +98,15 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-client.xml)
 
       <section anchor="http-client-yang-module" title="YANG Module">
         <t>This YANG module has normative references to <xref target="RFC6991"/>.</t>
-        <t><figure>
+        <t>
+          <figure>
+            <preamble>&lt;CODE BEGINS&gt; file "ietf-http-client@YYYY-MM-DD.yang"</preamble>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-http-client@YYYY-MM-DD.yang"
 INSERT_TEXT_FROM_FILE(ietf-http-client@YYYY-MM-DD.yang,71)
-<CODE ENDS>
 ]]></artwork>
-          </figure></t>
+            <postamble>&lt;CODE ENDS&gt;</postamble>
+          </figure>
+        </t>
       </section>
     </section>
 
@@ -132,13 +135,15 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-server.xml)
 
       <section anchor="http-server-yang-module" title="YANG Module">
         <t>This YANG module has normative references to <xref target="RFC6991"/>.</t>
-        <t><figure>
+        <t>
+          <figure>
+            <preamble>&lt;CODE BEGINS&gt; file "ietf-http-server@YYYY-MM-DD.yang"</preamble>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-http-server@YYYY-MM-DD.yang"
-INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
-<CODE ENDS>
+INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang,71)
 ]]></artwork>
-          </figure></t>
+            <postamble>&lt;CODE ENDS&gt;</postamble>
+          </figure>
+        </t>
       </section>
     </section>
 

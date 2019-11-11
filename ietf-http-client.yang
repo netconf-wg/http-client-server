@@ -45,7 +45,7 @@ module ietf-http-client {
 
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC
-     itself for full legal notices.;
+     itself for full legal notices.
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
      'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED',
@@ -129,26 +129,6 @@ module ietf-http-client {
        not do this itself so as to provide maximum flexibility
        to consuming models.";
 
-    leaf protocol-version {
-      nacm:default-deny-write;
-      type enumeration {
-        enum HTTP/1.0 {
-          description
-            "The client should use the 'HTTP/1.0' protocol.";
-        }
-        enum HTTP/1.1 {
-          description
-            "The client should use the 'HTTP/1.1' protocol.";
-        }
-        enum HTTP/2.0 {
-          description
-            "The client should use the 'HTTP/2.0' protocol.";
-        }
-      }
-      description
-        "The HTTP protocol version the client should use.";
-    }
-    
     container client-identity {
       description
         "The identity the HTTP client should use when

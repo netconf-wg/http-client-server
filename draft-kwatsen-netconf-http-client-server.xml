@@ -32,8 +32,8 @@
       <t>This document defines two YANG modules: the first defines a minimal
         grouping for configuring a generic HTTP client, and the second defines
         a minimal grouping for configuring a generic HTTP server. It is
-        intended that these groupings will be used and extended by
-        applications using the HTTP protocol.</t>
+        intended that these groupings will be used by higher-level HTTP-based
+        protocols.</t>
     </abstract>
 
     <note title="Editorial Note (To be removed by RFC Editor)">
@@ -61,8 +61,8 @@
       <t>This document defines two YANG 1.1 <xref target="RFC7950"/> modules:
         the first defines a grouping for configuring a generic HTTP client, and
         the second defines a grouping for configuring a generic HTTP server. It
-        is intended that these groupings will be used by applications using
-        the HTTP protocol.</t>
+        is intended that these groupings will be used by higher-level HTTP-based
+        protocols.</t>
     </section>
 
     <section title="Terminology">

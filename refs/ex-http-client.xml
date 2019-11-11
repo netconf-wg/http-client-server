@@ -1,5 +1,4 @@
 <http-client xmlns="urn:ietf:params:xml:ns:yang:ietf-http-client">
-  <protocol-version>HTTP/1.1</protocol-version>
   <client-identity>
     <basic>
       <user-id>bob</user-id>

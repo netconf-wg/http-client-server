@@ -57,10 +57,15 @@ module ietf-http-server {
 
   // Features
 
-  feature local-client-auth-supported {
+  feature client-auth-config-supported {
     description
-      "Indicates that the HTTP server supports local configuration
-       of client credentials.";
+      "Indicates that the configuration for how to authenticate
+       clients can be configured herein, as opposed to in an
+       application specific location.  That is, to support the
+       consuming data models that prefer to place client
+       authentication with client definitions, rather then
+       in a data model principally concerned with configuring
+       the transport.";
   }
 
   feature external-client-auth-supported {
@@ -162,71 +167,44 @@ module ietf-http-server {
               optional to access protected resources.";
          }
       }
-      choice local-or-external {
-        mandatory true;
+      container users {
+        if-feature "client-auth-config-supported";
         description
-          "Indicates if the client credentials are configured
-           locally or externally.  The need to support external
-           configuration for client authentication stems from
-           the desire to support consuming data models that
-           prefer to place client authentication with client
-           definitions, rather then in a data model principally
-           concerned with configuring the transport.";
-        case local {
-          if-feature "local-client-auth-supported";
+          "A list of locally configured users.";
+        list user {
+          key user-id;
           description
-            "Client credentials are configured locally.";
-          container users {
+            "The list of local users configured on this device.";
+          leaf user-id {
+            type string;
             description
-              "A list of locally configured users.";
-            list user {
-              key user-id;
-              description
-                "The list of local users configured on this device.";
+              "The user-id for the authenticating client.";
+          }
+          choice auth-type {
+            description
+              "The authentication type.";
+            container basic {
+              if-feature "basic-auth";
               leaf user-id {
                 type string;
                 description
                   "The user-id for the authenticating client.";
               }
-              choice auth-type {
+              leaf password {
+                nacm:default-deny-write;
+                type ianach:crypt-hash;
                 description
-                  "The authentication type.";
-                container basic {
-                  if-feature "basic-auth";
-                  leaf user-id {
-                    type string;
-                    description
-                      "The user-id for the authenticating client.";
-                  }
-                  leaf password {
-                    nacm:default-deny-write;
-                    type ianach:crypt-hash;
-                    description
-                      "The password for the authenticating client.";
-                  }
-                  description
-                    "The 'basic' HTTP scheme credentials.";
-                  reference
-                    "RFC 7617:
-                      The 'Basic' HTTP Authentication Scheme";
-                }
+                  "The password for the authenticating client.";
               }
+              description
+                "The 'basic' HTTP scheme credentials.";
+              reference
+                "RFC 7617:
+                  The 'Basic' HTTP Authentication Scheme";
             }
           }
         }
-        case external {
-          if-feature "external-client-auth-supported";
-          description
-            "Client credentials are configured externally.";
-          leaf client-auth-defined-elsewhere {
-            type empty;
-            description
-              "Indicates that credentials needed to authenticate
-               clients are configured elsewhere.";
-          }
-        }
-      } // choice local-or-external
+      }
     } // container client-authentication
-
   }
 }

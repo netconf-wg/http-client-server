@@ -4,8 +4,4 @@
     <protocol-version>HTTP/1.1</protocol-version>
     <protocol-version>HTTP/2.0</protocol-version>
   </protocol-versions>
-  <client-authentication>
-    <required/>
-    <client-auth-defined-elsewhere/>
-  </client-authentication>
 </http-server>

@@ -13,7 +13,7 @@
 <?rfc-ext allow-markup-in-artwork="yes" ?>
 <?rfc-ext include-index="no" ?>
 <!--<?rfc strict="no"?> -->
-<rfc category="std" docName="draft-kwatsen-netconf-http-client-server-latest"
+<rfc category="std" docName="draft-ietf-netconf-http-client-server-latest"
      ipr="trust200902">
   <front>
     <title abbrev="Groupings for HTTP Clients and Servers">YANG Groupings for
@@ -30,10 +30,11 @@
 
     <abstract>
       <t>This document defines two YANG modules: the first defines a minimal
-        grouping for configuring a generic HTTP client, and the second defines
-        a minimal grouping for configuring a generic HTTP server. It is
-        intended that these groupings will be used by higher-level HTTP-based
-        protocols.</t>
+        grouping for configuring an HTTP client, and the second defines
+        a minimal grouping for configuring an HTTP server.  It is
+        intended that these groupings will be used to help define the
+        configuration for simple HTTP-based protocols (not for complete
+        webservers or browsers).</t>
     </abstract>
 
     <note title="Editorial Note (To be removed by RFC Editor)">
@@ -58,11 +59,12 @@
 
   <middle>
     <section title="Introduction">
-      <t>This document defines two YANG 1.1 <xref target="RFC7950"/> modules:
-        the first defines a grouping for configuring a generic HTTP client, and
-        the second defines a grouping for configuring a generic HTTP server. It
-        is intended that these groupings will be used by higher-level HTTP-based
-        protocols.</t>
+      <t>This document defines two YANG 1.1 <xref target="RFC7950"/> modules: the first defines a minimal
+        grouping for configuring an HTTP client, and the second defines
+        a minimal grouping for configuring an HTTP server.  It is
+        intended that these groupings will be used to help define the
+        configuration for simple HTTP-based protocols (not for complete
+        webservers or browsers).</t>
     </section>
 
     <section title="Terminology">
@@ -247,11 +249,17 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang,71)
       <?rfc include="reference.RFC.8340.xml"?>
     </references>
 
-<!--
     <section title="Change Log">
       <section title="00 to 01">
-        <t><list style="symbols">
-          </list></t>
+        <t>
+          <list style="symbols">
+            <t>Modified Abstract and Intro to be more accurate wrt intended applicability.</t>
+            <t>In ietf-http-client, removed "protocol-version" and all auth schemes except "basic".</t>
+            <t>In ietf-http-client, factored out "client-identity-grouping" for proxy connections.</t>
+            <t>In ietf-http-server, removed "choice required-or-optional" and "choice local-or-external".</t>
+            <t>In ietf-http-server, moved the basic auth under a "choice auth-type" limited by new "feature basic-auth".</t>
+          </list>
+        </t>
       </section>
 
     </section>
@@ -262,7 +270,6 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang,71)
           TBD
       </t>
     </section>
--->
 
   </back>
 </rfc>

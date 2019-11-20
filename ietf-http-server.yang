@@ -183,5 +183,5 @@ module ietf-http-server {
         }
       }
     } // container client-authentication
-  }
+  } // grouping http-server-grouping
 }

@@ -261,6 +261,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang,71)
           </list>
         </t>
       </section>
+      <section title="01 to 02">
+        <t>
+          <list style="symbols">
+            <t>Removed the unused "external-client-auth-supported" feature from ietf-http-server.</t>
+          </list>
+        </t>
+      </section>
 
     </section>
 

@@ -68,12 +68,6 @@ module ietf-http-server {
        the transport.";
   }
 
-  feature external-client-auth-supported {
-    description
-      "Indicates that the HTTP server supports external configuration
-       of client credentials.";
-  }
-
   feature basic-auth {
     description
       "The 'basic-auth' feature indicates that the server

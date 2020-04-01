@@ -104,7 +104,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-client.xml)
           <figure>
             <preamble>&lt;CODE BEGINS&gt; file "ietf-http-client@YYYY-MM-DD.yang"</preamble>
             <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(ietf-http-client@YYYY-MM-DD.yang,71)
+INSERT_TEXT_FROM_FILE(ietf-http-client@YYYY-MM-DD.yang)
 ]]></artwork>
             <postamble>&lt;CODE ENDS&gt;</postamble>
           </figure>
@@ -141,7 +141,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-server.xml)
           <figure>
             <preamble>&lt;CODE BEGINS&gt; file "ietf-http-server@YYYY-MM-DD.yang"</preamble>
             <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang,71)
+INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
 ]]></artwork>
             <postamble>&lt;CODE ENDS&gt;</postamble>
           </figure>

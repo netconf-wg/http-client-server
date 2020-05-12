@@ -268,6 +268,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </list>
         </t>
       </section>
+      <section title="02 to 03">
+        <t>
+          <list style="symbols">
+            <t>Removed "protocol-versions" from ietf-http-server based on HTTP WG feedback.</t>
+          </list>
+        </t>
+      </section>
 
     </section>
 

@@ -27,7 +27,7 @@ module ietf-http-server {
     "This module defines reusable groupings for HTTP servers that
      can be used as a basis for specific HTTP server instances.
 
-     Copyright (c) 2019 IETF Trust and the persons identified
+     Copyright (c) 2020 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
@@ -101,31 +101,6 @@ module ietf-http-server {
          underlying software's default value is used.  Set to the
          empty string to disable.";
     } 
-
-    container protocol-versions {
-      nacm:default-deny-write;
-      description
-        "A list of HTTP protocol versions supported by this
-         server.";
-      leaf-list protocol-version {
-        type enumeration {
-          enum "HTTP/1.0" {
-            description
-              "The server supports the 'HTTP/1.0' protocol.";
-          }
-          enum "HTTP/1.1" {
-            description
-              "The server supports the 'HTTP/1.1' protocol.";
-          }
-          enum "HTTP/2.0" {
-            description
-              "The server supports the 'HTTP/2.0' protocol.";
-          }
-        }
-        description
-          "An HTTP protocol version supported by this server.";
-      }
-    }
 
     container client-authentication {
       if-feature "client-auth-config-supported";

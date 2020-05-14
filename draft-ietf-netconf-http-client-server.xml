@@ -271,6 +271,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <section title="02 to 03">
         <t>
           <list style="symbols">
+            <t>Removed "protocol-versions" from ietf-http-server based on HTTP WG feedback.</t>
             <t>Slightly restructured the "proxy-server" definition in ietf-http-client.</t>
             <t>Added http-client example show proxy server use.</t>
           </list>
@@ -281,7 +282,8 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
     <section numbered="no" title="Acknowledgements">
       <t>The authors would like to thank for following for lively discussions
         on list and in the halls (ordered by last name):
-          TBD
+          Mark Nottingham
+          and Willy Tarreau.
       </t>
     </section>
 

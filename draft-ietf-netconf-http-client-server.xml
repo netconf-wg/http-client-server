@@ -88,14 +88,28 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-client-tree-no-expand.txt)
       </section>
 
       <section title="Example Usage">
-        <t>This section presents an example showing the http-client-grouping
-        populated with some data.</t>
+        <t>This section presents two examples showing the http-client-grouping
+          populated with some data.</t>
+        <t>The following example illustrates an HTTP client connecting directly
+          to an HTTP server.</t>
         <t>
           <figure>
             <artwork><![CDATA[
 INSERT_TEXT_FROM_FILE(refs/ex-http-client.xml)
 ]]></artwork>
-          </figure></t>
+          </figure>
+        </t>
+        <t>The following example illustrates the same client connecting through an
+          HTTP proxy.  This example is consistent with examples presented in Section 2
+          of <xref target="I-D.ietf-netconf-trust-anchors"/> and Section 3.2 of
+          <xref target="I-D.ietf-netconf-keystore"/>.</t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-http-client-proxy.xml)
+]]></artwork>
+          </figure>
+        </t>
       </section>
 
       <section anchor="http-client-yang-module" title="YANG Module">
@@ -247,6 +261,8 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <?rfc include="reference.RFC.6241.xml"?>
       <?rfc include="reference.RFC.8040.xml"?>
       <?rfc include="reference.RFC.8340.xml"?>
+      <?rfc include="reference.I-D.ietf-netconf-trust-anchors"?>
+      <?rfc include="reference.I-D.ietf-netconf-keystore"?>
     </references>
 
     <section title="Change Log">

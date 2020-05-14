@@ -48,6 +48,15 @@ run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 rm $name
 
+printf "Testing ex-http-client-proxy.xml..."
+name=`ls -1 ../ietf-http-client\@*.yang | sed 's/\.\.\///'`
+sed 's/^}/container http-client { uses http-client-grouping; }}/' ../ietf-http-client\@*.yang > $name
+command="yanglint -m -s -p ../ ./ietf-origin.yang $name ex-http-client-proxy.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml" 
+#command="yanglint -m -s ../ietf-crypto-types\@*.yang ../ietf-truststore\@*.yang ../ietf-keystore\@*.yang ../ietf-tls-common\@*.yang ./ietf-origin.yang $name ex-http-client-proxy.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+rm $name
+
 printf "Testing ex-http-server.xml..."
 name=`ls -1 ../ietf-http-server\@*.yang | sed 's/\.\.\///'`
 sed 's/^}/container http-server { uses http-server-grouping; }}/' ../ietf-http-server\@*.yang > $name

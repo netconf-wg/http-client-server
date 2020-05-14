@@ -268,7 +268,14 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </list>
         </t>
       </section>
-
+      <section title="02 to 03">
+        <t>
+          <list style="symbols">
+            <t>Slightly restructured the "proxy-server" definition in ietf-http-client.</t>
+            <t>Added http-client example show proxy server use.</t>
+          </list>
+        </t>
+      </section>
     </section>
 
     <section numbered="no" title="Acknowledgements">

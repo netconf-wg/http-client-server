@@ -82,11 +82,10 @@ module ietf-http-client {
 
   grouping client-identity-grouping {
     description
-      "The credentials used by the client to authenticate to
-       the HTTP server.";
+      "The credentials used by the client to authenticate
+       itself to the HTTP server.";
     choice auth-type {
       nacm:default-deny-write;
-      mandatory true;
       description
         "The authentication type.";
       case basic {
@@ -130,6 +129,8 @@ module ietf-http-client {
        to consuming models.";
 
     container client-identity {
+      presence
+        "Indicates that HTTP-level client authenticate is sent.";
       description
         "The identity the HTTP client should use when
          authenticating itself to the HTTP server.";
@@ -152,11 +153,18 @@ module ietf-http-client {
            name collisions.";
         uses "tlsc:tls-client-grouping";
       }
-      container proxy-client-identity {
+      container http-client-parameters {
         description
-          "The identity the HTTP client should use when
-           authenticating itself to the HTTP server.";
-        uses client-identity-grouping;
+          "A wrapper around the HTTP parameters to avoid
+           name collisions.";
+        container client-identity {
+          presence
+            "Indicates that HTTP-level client authenticate is sent.";
+          description
+            "The identity the HTTP client should use when
+             authenticating itself to the HTTP server.";
+          uses client-identity-grouping;
+        }
       }
       description
         "Proxy server settings.";

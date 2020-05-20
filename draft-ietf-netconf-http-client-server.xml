@@ -17,7 +17,7 @@
      ipr="trust200902">
   <front>
     <title abbrev="Groupings for HTTP Clients and Servers">YANG Groupings for
-    HTTP Clients and HTTP Servers</title>
+      HTTP Clients and HTTP Servers</title>
     <author fullname="Kent Watsen" initials="K." surname="Watsen">
       <organization>Watsen Networks</organization>
       <address>
@@ -27,7 +27,6 @@
     <date/>
     <area>Operations</area>
     <workgroup>NETCONF Working Group</workgroup>
-
     <abstract>
       <t>This document defines two YANG modules: the first defines a minimal
         grouping for configuring an HTTP client, and the second defines
@@ -36,25 +35,36 @@
         configuration for simple HTTP-based protocols (not for complete
         webservers or browsers).</t>
     </abstract>
-
     <note title="Editorial Note (To be removed by RFC Editor)">
-      <t>This draft contains many placeholder values that need to be replaced
-      with finalized values at the time of publication. This note summarizes
-      all of the substitutions that are needed. No other RFC Editor
-      instructions are specified elsewhere in this document.</t>
-
+      <t>This draft contains placeholder values that need to be replaced
+        with finalized values at the time of publication. This note summarizes
+        all of the substitutions that are needed. No other RFC Editor
+        instructions are specified elsewhere in this document.</t>
+      <t>Artwork in this document contains shorthand references to drafts in
+        progress.  Please apply the following replacements (note: not all may be present):
+        <list style="symbols">
+          <t><spanx style="verb">AAAA</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-crypto-types</t>
+          <t><spanx style="verb">BBBB</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-trust-anchors</t>
+          <t><spanx style="verb">CCCC</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-keystore</t>
+          <t><spanx style="verb">DDDD</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-tcp-client-server</t>
+          <t><spanx style="verb">EEEE</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-ssh-client-server</t>
+          <t><spanx style="verb">FFFF</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-tls-client-server</t>
+          <t><spanx style="verb">GGGG</spanx> --&gt; the assigned RFC value for this draft</t>
+        </list>
+      </t>
       <t>Artwork in this document contains placeholder values for the date of
-      publication of this draft. Please apply the following replacement: <list
-          style="symbols">
-          <t><spanx style="verb">YYYY-MM-DD</spanx> --&gt; the publication
-          date of this draft</t>
-        </list></t>
-
+        publication of this draft. Please apply the following replacement:
+        <list style="symbols">
+          <t><spanx style="verb">YYYY-MM-DD</spanx> --&gt; the publication date of this draft</t>
+        </list>
+      </t>
       <t>The following Appendix section is to be removed prior to publication:
-      <list style="symbols">
+        <list style="symbols">
           <t>Appendix A. Change Log</t>
-        </list></t>
+        </list>
+      </t>
     </note>
+INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,158)
   </front>
 
   <middle>
@@ -290,6 +300,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Removed "protocol-versions" from ietf-http-server based on HTTP WG feedback.</t>
             <t>Slightly restructured the "proxy-server" definition in ietf-http-client.</t>
             <t>Added http-client example show proxy server use.</t>
+            <t>Added a "Note to Reviewers" note to first page.</t>
           </list>
         </t>
       </section>
@@ -298,7 +309,8 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
     <section numbered="no" title="Acknowledgements">
       <t>The authors would like to thank for following for lively discussions
         on list and in the halls (ordered by last name):
-          Mark Nottingham
+          Mark Nottingham,
+          Ben Schwartz,
           and Willy Tarreau.
       </t>
     </section>

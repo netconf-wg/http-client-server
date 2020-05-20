@@ -37,8 +37,8 @@ module ietf-http-server {
      Legal Provisions Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC XXXX
-     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC
+     This version of this YANG module is part of RFC GGGG
+     (https://www.rfc-editor.org/info/rfcGGGG); see the RFC
      itself for full legal notices.
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
@@ -52,7 +52,7 @@ module ietf-http-server {
     description
       "Initial version";
     reference
-      "RFC XXXX: YANG Groupings for HTTP Clients and HTTP Servers";
+      "RFC GGGG: YANG Groupings for HTTP Clients and HTTP Servers";
   }
 
   // Features

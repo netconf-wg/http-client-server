@@ -80,44 +80,58 @@ module ietf-http-client {
 
   // Groupings
 
-  grouping client-identity-grouping {
+  grouping http-client-identity-grouping {
     description
-      "The credentials used by the client to authenticate
-       itself to the HTTP server.";
-    choice auth-type {
+      "A grouping to provide HTTP credentials used by the
+       client to authenticate itself to the HTTP server.";
+    container client-identity {
       nacm:default-deny-write;
+      presence
+        "Indicates that HTTP-level client authentication
+         is sent.  Present so that the 'choice' node's
+         mandatory true doesn't imply that a client
+         identity must be configured.";
       description
-        "The authentication type.";
-      case basic {
-        container basic {
-          if-feature "basic-auth";
-          leaf user-id {
-            type string;
-            mandatory true;
+        "The identity the HTTP client should use when
+         authenticating itself to the HTTP server.";
+      choice auth-type {
+        mandatory true;
+        description
+          "A choice amongst available authentication types.";
+        case basic {
+          container basic {
+            if-feature "basic-auth";
+            leaf user-id {
+              type string;
+              mandatory true;
+              description
+                "The user-id for the authenticating client.";
+            }
+            leaf password {
+              nacm:default-deny-all;
+              type string;
+              mandatory true;
+              description
+                "The password for the authenticating client.";
+            }
             description
-              "The user-id for the authenticating client.";
+              "The 'basic' HTTP scheme credentials.";
+            reference
+              "RFC 7617: The 'Basic' HTTP Authentication Scheme";
           }
-          leaf password {
-            nacm:default-deny-all;
-            type string;
-            mandatory true;
-            description
-              "The password for the authenticating client.";
-          }
-          description
-            "The 'basic' HTTP scheme credentials.";
-          reference
-            "RFC 7617: The 'Basic' HTTP Authentication Scheme";
         }
       }
     }
-  } // grouping client-identity-grouping
+  } // grouping http-client-identity-grouping
 
   grouping http-client-grouping {
     description
-      "A reusable grouping for configuring a HTTP client,
-       including the IP address and port number it initiates
-       a connections to.
+      "A reusable grouping for configuring a HTTP client.
+
+       This grouping is expected to be used in conjunction with
+       other configurations providing, e.g., the hostname or IP
+       address and port number the client initiates connections
+       to.
        
        Note that this grouping uses fairly typical descendent
        node names such that a stack of 'uses' statements will
@@ -129,44 +143,85 @@ module ietf-http-client {
        to consuming models.
        
        FIXME: it is assumed that the application can construct any
-       necessary HTTP path, e.g., via a YANG 'rpc' definition...okay?";
+       necessary HTTP path, e.g., via a YANG 'rpc' definition...ok?";
 
-    container client-identity {
-      presence
-        "Indicates that HTTP-level client authenticate is sent.";
-      description
-        "The identity the HTTP client should use when
-         authenticating itself to the HTTP server.";
-      uses client-identity-grouping;
-    }
+    uses http-client-identity-grouping;
 
-    container proxy-server {
+    container proxy-connect {
       nacm:default-deny-write;
       if-feature "proxy-connect";
-      presence true; // only so ex-http-client can pass validation?
-      container tcp-client-parameters {
+      presence
+        "Indicates that the HTTP-client is to connect thru an
+         HTTP-level proxy server.  Present so that the 'choice'
+         node's mandatory true doesn't imply that a proxy
+         connection must be configured.";
+      choice proxy-type {
+        mandatory true;
         description
-          "A wrapper around the TCP parameters to avoid
-           name collisions.";
-        uses "tcpc:tcp-client-grouping";
-      }
-      container tls-client-parameters {
-        description
-          "A wrapper around the TLS parameters to avoid
-           name collisions.";
-        uses "tlsc:tls-client-grouping";
-      }
-      container http-client-parameters {
-        description
-          "A wrapper around the HTTP parameters to avoid
-           name collisions.";
-        container client-identity {
-          presence
-            "Indicates that HTTP-level client authenticate is sent.";
-          description
-            "The identity the HTTP client should use when
-             authenticating itself to the HTTP server.";
-          uses client-identity-grouping;
+          "Choice amongst proxy server types.";
+        case http {
+          container http-proxy {
+            /* FIXME: THIS ISN'T NEEDED...because in a 'case'
+            presence
+              "Indicates that a HTTP proxy (Web proxy) connection
+               is configured.";
+            */
+            description
+              "Container for HTTP Proxy (Web Proxy) server
+               configuration parameters.";
+            container tcp-client-parameters {
+              description
+                "A wrapper around the TCP parameters to avoid
+                 name collisions.";
+              uses "tcpc:tcp-client-grouping";
+            }
+            container http-client-parameters {
+              description
+                "A wrapper around the HTTP parameters to avoid
+                 name collisions.";
+              uses http-client-identity-grouping;
+              /* FIXME: is HTTP Proxy auth *required*
+                refine client-identity/auth-type {
+                  mandatory true;
+                }
+              */
+            }
+          }
+        }
+        case https {
+          container https-proxy {
+            /* FIXME: THIS ISN'T NEEDED...because in a 'case'
+            presence
+              "Indicates that a HTTPS proxy (Secure web proxy)
+               connection is configured.";
+            */
+            /* FIXME: is HTTP Proxy auth *required*
+            must
+              "tls-client-parameters/client-identity
+               or http-client-parameters/client-identity";
+            */
+            description
+              "Container for HTTPS Proxy (Secure Web Proxy) server
+               configuration parameters.";
+            container tcp-client-parameters {
+              description
+                "A wrapper around the TCP parameters to avoid
+                 name collisions.";
+              uses "tcpc:tcp-client-grouping";
+            }
+            container tls-client-parameters {
+              description
+                "A wrapper around the TLS parameters to avoid
+                 name collisions.";
+              uses "tlsc:tls-client-grouping";
+            }
+            container http-client-parameters {
+              description
+                "A wrapper around the HTTP parameters to avoid
+                 name collisions.";
+              uses http-client-identity-grouping;
+            }
+          }
         }
       }
       description

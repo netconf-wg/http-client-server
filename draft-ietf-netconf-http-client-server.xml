@@ -304,6 +304,15 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </list>
         </t>
       </section>
+      <section title="03 to 04">
+        <t>
+          <list style="symbols">
+            <t>Added a parent "container" to "client-identity-grouping" so that it could be
+              better used by the proxy model.</t>
+            <t>Added a "choice" to the proxy model enabling selection of proxy types.</t>
+          </list>
+        </t>
+      </section>
     </section>
 
     <section numbered="no" title="Acknowledgements">

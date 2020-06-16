@@ -64,7 +64,7 @@
         </list>
       </t>
     </note>
-INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,158)
+INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,148)
   </front>
 
   <middle>
@@ -310,6 +310,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Added a parent "container" to "client-identity-grouping" so that it could be
               better used by the proxy model.</t>
             <t>Added a "choice" to the proxy model enabling selection of proxy types.</t>
+            <t>Added 'http-client-stack-grouping' and 'http-server-stack-grouping' convenience groupings.</t>
           </list>
         </t>
       </section>

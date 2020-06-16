@@ -78,6 +78,17 @@ module ietf-http-client {
       "RFC 7617: The 'Basic' HTTP Authentication Scheme";
   }
 
+  feature tcp-supported {
+    description
+      "Indicates that the server supports HTTP/TCP.";
+  }
+
+  feature tls-supported {
+    description
+      "Indicates that the server supports HTTP/TLS.";
+  }
+
+
   // Groupings
 
   grouping http-client-identity-grouping {
@@ -229,7 +240,63 @@ module ietf-http-client {
     }
   } // grouping http-client-grouping
 
-// FIXME: add http-client-stack and https-client-stack?
 
+
+  grouping http-client-stack-grouping {
+    description
+      "A grouping that defines common HTTP-based protocol stacks.";
+    choice transport {
+      mandatory true;
+      description
+        "Choice amongst various transports type.  TCP, with and
+         without TLS are defined here, with 'feature' statements
+         so that they may be disabled.  Other transports MAY be
+         augmented in as 'case' statements by future efforts.";
+      case tcp {
+        if-feature tcp-supported;
+        container tcp {
+          description
+            "Container for TCP-based HTTP protocols.";
+          container tcp-client-parameters {
+            description
+              "A wrapper around the TCP parameters to avoid
+               name collisions.";
+            uses "tcpc:tcp-client-grouping";
+          }
+          container http-client-parameters {
+            description
+              "A wrapper around the HTTP parameters to avoid
+               name collisions.";
+            uses http-client-grouping;
+          }
+        }
+      }
+      case tls {
+        if-feature tls-supported;
+        container tls {
+          description
+            "Container for TLS-based HTTP protocols.";
+          container tcp-client-parameters {
+            description
+              "A wrapper around the TCP parameters to avoid
+               name collisions.";
+            uses "tcpc:tcp-client-grouping";
+          }
+          container tls-client-parameters {
+            description
+              "A wrapper around the TLS parameters to avoid
+               name collisions.";
+            uses "tlsc:tls-client-grouping";
+          }
+          container http-client-parameters {
+            description
+              "A wrapper around the HTTP parameters to avoid
+               name collisions.";
+            uses http-client-grouping;
+          }
+        }
+      }
+    }
+  }
 
 } // module ietf-http-client

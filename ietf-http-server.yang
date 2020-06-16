@@ -15,6 +15,18 @@ module ietf-http-server {
       "RFC 8341: Network Configuration Access Control Model";
   }
 
+  import ietf-tcp-server {
+    prefix tcps;
+    reference
+      "RFC AAAA: YANG Groupings for TCP Clients and TCP Servers";
+  }
+ 
+  import ietf-tls-server {
+    prefix tlss;
+    reference
+      "RFC BBBB: YANG Groupings for TLS Clients and TLS Servers";
+  }
+
   organization
     "IETF NETCONF (Network Configuration) Working Group";
 
@@ -77,6 +89,15 @@ module ietf-http-server {
       "RFC 7617: The 'Basic' HTTP Authentication Scheme";
   }
 
+  feature tcp-supported {
+    description
+      "Indicates that the server supports HTTP/TCP.";
+  }
+
+  feature tls-supported {
+    description
+      "Indicates that the server supports HTTP/TLS.";
+  }
 
   // Groupings
 
@@ -153,4 +174,62 @@ module ietf-http-server {
       }
     } // container client-authentication
   } // grouping http-server-grouping
+
+
+  grouping http-server-stack-grouping {
+    description
+      "A grouping that defines common HTTP-based protocol stacks.";
+    choice transport {
+      mandatory true;
+      description
+        "Choice amongst various transports type.  TCP, with and
+         without TLS are defined here, with 'feature' statements
+         so that they may be disabled.  Other transports MAY be
+         augmented in as 'case' statements by future efforts.";
+      case tcp {
+        if-feature tcp-supported;
+        container tcp {
+          description
+            "Container for TCP-based HTTP protocols.";
+          container tcp-server-parameters {
+            description
+              "A wrapper around the TCP parameters to avoid
+               name collisions.";
+            uses "tcps:tcp-server-grouping";
+          }
+          container http-server-parameters {
+            description
+              "A wrapper around the HTTP parameters to avoid
+               name collisions.";
+            uses http-server-grouping;
+          }
+        }
+      }
+      case tls {
+        if-feature tls-supported;
+        container tls {
+          description
+            "Container for TLS-based HTTP protocols.";
+          container tcp-server-parameters {
+            description
+              "A wrapper around the TCP parameters to avoid
+               name collisions.";
+            uses "tcps:tcp-server-grouping";
+          }
+          container tls-server-parameters {
+            description
+              "A wrapper around the TLS parameters to avoid
+               name collisions.";
+            uses "tlss:tls-server-grouping";
+          }
+          container http-server-parameters {
+            description
+              "A wrapper around the HTTP parameters to avoid
+               name collisions.";
+            uses http-server-grouping;
+          }
+        }
+      }
+    }
+  }
 }

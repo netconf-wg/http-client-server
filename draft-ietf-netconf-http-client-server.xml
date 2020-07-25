@@ -482,7 +482,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
     </section>
 
     <section title="IANA Considerations">
-      <section title="The IETF XML Registry">
+      <section title='The "IETF XML" Registry'>
         <t>This document registers two URIs in the "ns" subregistry of the
         IETF XML Registry <xref target="RFC3688"/>. Following the format in
         <xref target="RFC3688"/>, the following registrations are
@@ -500,7 +500,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </figure></t>
       </section>
 
-      <section title="The YANG Module Names Registry">
+      <section title='The "YANG Module Names" Registry'>
         <t>This document registers two YANG modules in the YANG Module Names
         registry <xref target="RFC6020"/>. Following the format in <xref
         target="RFC6020"/>, the following registrations are requested:</t>
@@ -509,12 +509,12 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
    name:         ietf-http-client
    namespace:    urn:ietf:params:xml:ns:yang:ietf-http-client
    prefix:       httpc
-   reference:    RFC XXXX
+   reference:    RFC GGGG
 
    name:         ietf-http-server
    namespace:    urn:ietf:params:xml:ns:yang:ietf-http-server
    prefix:       https
-   reference:    RFC XXXX
+   reference:    RFC GGGG
 </artwork>
           </figure></t>
       </section>
@@ -586,6 +586,16 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Added 'http-client-stack-grouping' and 'http-server-stack-grouping' convenience groupings.</t>
             <t>Expanded "Data Model Overview section(s) [remove "wall" of tree diagrams].</t>
             <t>Updated the Security Considerations section.</t>
+          </list>
+        </t>
+      </section>
+      <section title="04 to 05">
+        <t>
+          <list style="symbols">
+            <t>Fixed titles and a ref in the IANA Considerations section</t>
+            <t>Cleaned up examples (e.g., removed FIXMEs)</t>
+
+            <t>SUBMISSION PENDING!...</t>
           </list>
         </t>
       </section>

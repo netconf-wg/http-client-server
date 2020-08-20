@@ -94,7 +94,17 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
     </section>
 
     <section anchor="http-client-model" title="The &quot;ietf-http-client&quot; Module">
-      <section title="Data Model Overview">
+
+      <t>This section defines a YANG 1.1 <xref target="RFC7950"/> module called
+        "ietf-http-client".  A high-level overview of the module is provided in
+        <xref target="client-overview"/>. Examples illustatrating the module's use
+        are provided in <xref target="client-examples">Examples</xref>. The YANG
+        module itself is defined in <xref target="client-yang-module"/>.</t>
+
+      <section title="Data Model Overview" anchor="client-overview">
+
+       <t>This section provides an overview of the "ietf-http-client" module
+          in terms of its features and groupings.</t>
 
         <section title="Features" anchor="client-features" toc="exclude">
           <t>The following diagram lists all the "feature" statements
@@ -110,6 +120,10 @@ Features:
 ]]></artwork>
             </figure>
           </t>
+          <aside>
+            <t>The diagram above uses syntax that is similar to but not
+              defined in <xref target="RFC8340"/>.</t>
+          </aside>
         </section>
 
         <section title="Groupings" toc="exclude">
@@ -125,6 +139,10 @@ Groupings:
 ]]></artwork>
             </figure>
           </t>
+          <aside>
+            <t>The diagram above uses syntax that is similar to but not
+              defined in <xref target="RFC8340"/>.</t>
+          </aside>
           <t>Each of these groupings are presented in the following subsections.</t>
 
           <section title="The &quot;http-client-identity-grouping&quot; Grouping" anchor="http-client-identity-grouping">
@@ -224,7 +242,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-stack-grouping.no-expand.txt)
         </section>
       </section>
 
-      <section title="Example Usage">
+      <section title="Example Usage" anchor="client-examples">
         <t>This section presents two examples showing the http-client-grouping
           populated with some data.</t>
         <t>The following example illustrates an HTTP client connecting directly
@@ -249,7 +267,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-client-proxy.xml)
         </t>
       </section>
 
-      <section anchor="http-client-yang-module" title="YANG Module">
+      <section anchor="client-yang-module" title="YANG Module">
         <t>This YANG module has normative references to <xref target="RFC6991"/>.</t>
         <t>
           <figure>
@@ -264,7 +282,17 @@ INSERT_TEXT_FROM_FILE(ietf-http-client@YYYY-MM-DD.yang)
     </section>
 
     <section anchor="http-server-model" title="The &quot;ietf-http-server&quot; Module">
-      <section title="Data Model Overview">
+
+      <t>This section defines a YANG 1.1 <xref target="RFC7950"/> module called
+        "ietf-http-server".  A high-level overview of the module is provided in
+        <xref target="server-overview"/>. Examples illustatrating the module's use
+        are provided in <xref target="server-examples">Examples</xref>. The YANG
+        module itself is defined in <xref target="server-yang-module"/>.</t>
+
+      <section title="Data Model Overview" anchor="server-overview">
+
+       <t>This section provides an overview of the "ietf-http-server" module
+          in terms of its features and groupings.</t>
 
         <section title="Features" anchor="server-features" toc="exclude">
           <t>The following diagram lists all the "feature" statements
@@ -280,6 +308,10 @@ Features:
 ]]></artwork>
             </figure>
           </t>
+          <aside>
+            <t>The diagram above uses syntax that is similar to but not
+              defined in <xref target="RFC8340"/>.</t>
+          </aside>
         </section>
 
         <section title="Groupings" toc="exclude">
@@ -294,6 +326,10 @@ Groupings:
 ]]></artwork> 
             </figure>
           </t>
+          <aside>
+            <t>The diagram above uses syntax that is similar to but not
+              defined in <xref target="RFC8340"/>.</t>
+          </aside>
           <t>Each of these groupings are presented in the following subsections.</t>
 
           <section title="The &quot;http-server-grouping&quot; Grouping" anchor="http-server-grouping">
@@ -356,7 +392,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-server-stack-grouping.no-expand.txt)
         </section>
       </section>
 
-      <section title="Example Usage">
+      <section title="Example Usage" anchor="server-examples">
         <t>This section presents an example showing the http-server-grouping
         populated with some data.</t>
         <t>
@@ -367,7 +403,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-server.xml)
           </figure></t>
       </section>
 
-      <section anchor="http-server-yang-module" title="YANG Module">
+      <section anchor="server-yang-module" title="YANG Module">
         <t>This YANG module has normative references to <xref target="RFC6991"/>.</t>
         <t>
           <figure>
@@ -537,15 +573,15 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <?rfc include="reference.RFC.8040.xml"?>
       <?rfc include="reference.RFC.8340.xml"?>
       <?rfc include="reference.RFC.8342.xml"?>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-crypto-types.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-trust-anchors.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-keystore.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-tcp-client-server.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-ssh-client-server.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-tls-client-server.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-http-client-server.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
-      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-restconf-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-crypto-types.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-trust-anchors.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-keystore.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tcp-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-ssh-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tls-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-http-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-restconf-client-server.xml"/>
     </references>
 
     <section title="Change Log" removeInRFC="true" anchor="change-log">
@@ -594,8 +630,9 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           <list style="symbols">
             <t>Fixed titles and a ref in the IANA Considerations section</t>
             <t>Cleaned up examples (e.g., removed FIXMEs)</t>
-
-            <t>SUBMISSION PENDING!...</t>
+            <t>Fixed issues found by the SecDir review of the "keystore" draft.</t>
+            <t>Updated the "ietf-http-client" module to use the new "password-grouping" 
+              grouping from the "crypto-types" module.</t>
           </list>
         </t>
       </section>

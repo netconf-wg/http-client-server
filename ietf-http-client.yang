@@ -9,16 +9,22 @@ module ietf-http-client {
       "RFC 8341: Network Configuration Access Control Model";
   }
 
+  import ietf-crypto-types {
+    prefix ct;
+    reference
+      "RFC AAAA: YANG Data Types and Groupings for Cryptography";
+  }
+
   import ietf-tcp-client {
     prefix tcpc;
     reference
-      "RFC AAAA: YANG Groupings for TCP Clients and TCP Servers";
+      "RFC DDDD: YANG Groupings for TCP Clients and TCP Servers";
   }
  
   import ietf-tls-client {
     prefix tlsc;
     reference
-      "RFC BBBB: YANG Groupings for TLS Clients and TLS Servers";
+      "RFC FFFF: YANG Groupings for TLS Clients and TLS Servers";
   }
 
   organization
@@ -118,10 +124,7 @@ module ietf-http-client {
               description
                 "The user-id for the authenticating client.";
             }
-            leaf password {
-              nacm:default-deny-all;
-              type string;
-              mandatory true;
+            uses ct:password-grouping {
               description
                 "The password for the authenticating client.";
             }

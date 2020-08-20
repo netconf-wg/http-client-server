@@ -18,13 +18,13 @@ module ietf-http-server {
   import ietf-tcp-server {
     prefix tcps;
     reference
-      "RFC AAAA: YANG Groupings for TCP Clients and TCP Servers";
+      "RFC DDDD: YANG Groupings for TCP Clients and TCP Servers";
   }
  
   import ietf-tls-server {
     prefix tlss;
     reference
-      "RFC BBBB: YANG Groupings for TLS Clients and TLS Servers";
+      "RFC FFFF: YANG Groupings for TLS Clients and TLS Servers";
   }
 
   organization

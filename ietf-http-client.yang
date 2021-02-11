@@ -154,11 +154,8 @@ module ietf-http-client {
        the 'uses' statement in a container called 
        'http-client-parameters').  This model purposely does
        not do this itself so as to provide maximum flexibility
-       to consuming models.
+       to consuming models.";
        
-       FIXME: it is assumed that the application can construct any
-       necessary HTTP path, e.g., via a YANG 'rpc' definition...ok?";
-
     uses http-client-identity-grouping;
 
     container proxy-connect {

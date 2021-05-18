@@ -1,3 +1,5 @@
+<!-- The outermost element below doesn't exist in the data model. -->
+<!--  It simulates if the "grouping" were a "container" instead.  -->
 <http-client xmlns="urn:ietf:params:xml:ns:yang:ietf-http-client">
   <client-identity>
     <basic>

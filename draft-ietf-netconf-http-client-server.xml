@@ -146,10 +146,10 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-identity-grouping.no-expand.txt)
             <ul>
               <li>This grouping exists because it is used three times by the
                 "http-client-grouping" discussed in <xref target="http-client-grouping"/>.</li>
-              <li>The "client-identity" node is a "presence" container so that its
-                descendent "choice" node's "mandatory true" doesn't imply that a
-                client identity must be configured, as a client identity may be
-                configured at protocol layers.</li>
+              <li>The "client-identity" node is a "presence" container so the
+                mandatory descendant nodes do not imply that this node must
+                be configured, as a client identity may be configured at
+                protocol layers.</li>
               <li>The "basic" authentication scheme is the only scheme defined
                 by this module, albeit it must be enabled via the "basic-auth"
                 feature (see <xref target="client-features"/>).</li>
@@ -178,10 +178,10 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
                 grouping discussed in <xref target="http-client-identity-grouping"/>, this
                 grouping defines support for HTTP-proxies, albeit it must be enabled
                 via a "feature" statement.</li>
-              <li>The "proxy-connect" node is a "presence" container so that its
-                descendent "choice" node's "mandatory true" doesn't imply that a
-                proxy connection must be configured, assuming the server supports
-                the "proxy-connect" feature.</li>
+              <li>The "proxy-connect" node is a "presence" container so the 
+                mandatory descendant nodes do not imply that this node must
+                be configured, assuming the server supports the "proxy-connect"
+                feature.</li>
               <li>For the referenced grouping statement(s):
                 <ul spacing="compact">
                   <li>The "http-client-identity-grouping" grouping is discussed in

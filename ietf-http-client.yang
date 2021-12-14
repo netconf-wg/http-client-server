@@ -104,7 +104,7 @@ module ietf-http-client {
       nacm:default-deny-write;
       presence
         "Indicates that a client identity has been configured.
-         This statement is present so the mandatory descendent
+         This statement is present so the mandatory descendant
          nodes do not imply that this node must be configured.";
       description
         "The identity the HTTP client should use when

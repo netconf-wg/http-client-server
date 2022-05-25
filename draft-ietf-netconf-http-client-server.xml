@@ -661,6 +661,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </list>
         </t>
       </section>
+      <section title="09 to 10">
+        <t>
+          <list style="symbols">
+            <t>NO UPDATE.</t>
+          </list>
+        </t>
+      </section>
       <!--
       <section title="08 to 09">
         <t>

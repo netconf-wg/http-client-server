@@ -133,10 +133,10 @@ Features:
 ]]></artwork>
             </figure>
           </t>
-          <aside>
+          <!--<aside>-->
             <t>The diagram above uses syntax that is similar to but not
               defined in <xref target="RFC8340"/>.</t>
-          </aside>
+          <!--</aside>-->
         </section>
 
         <section title="Groupings" toc="exclude">
@@ -314,10 +314,10 @@ Features:
 ]]></artwork>
             </figure>
           </t>
-          <aside>
+          <!--<aside>-->
             <t>The diagram above uses syntax that is similar to but not
               defined in <xref target="RFC8340"/>.</t>
-          </aside>
+          <!--</aside>-->
         </section>
 
         <section title="Groupings" toc="exclude">
@@ -448,18 +448,18 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             </t>
           </list>
         </t>
-        <aside>
+        <!--<aside>-->
           <t>Please be aware that this module uses the "key" and "private-key"
             nodes from the "ietf-crypto-types" module <xref target="I-D.ietf-netconf-crypto-types"/>,
             where said nodes have the NACM extension "default-deny-all" set, thus
             preventing unrestricted read-access to the cleartext key values.</t>
-        </aside>
+        <!--</aside>-->
 
         <t>None of the writable data nodes defined in this YANG module are
           considered sensitive or vulnerable in network environments.
           The NACM "default-deny-write" extension has not been set for
           any data nodes defined in this module.</t>
-        <aside>
+        <!--<aside>-->
           <t>Please be aware that this module uses groupings from the
             "ietf-tls-client" and "ietf-tls-server" modules defined in
             <xref target="I-D.ietf-netconf-tls-client-server"/>.  All
@@ -467,7 +467,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             extension "default-deny-write" set, thus preventing
             unrestricted write-access to the data nodes defined
             in those groupings.</t>
-        </aside>
+        <!--</aside>-->
 
         <t>This module does not define any RPCs, actions, or notifications,
           and thus the security consideration for such is not provided here.</t>
@@ -499,7 +499,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           considered sensitive or vulnerable in network environments.
           The NACM "default-deny-write" extension has not been set for
           any data nodes defined in this module.</t>
-        <aside>
+        <!--<aside>-->
           <t>Please be aware that this module uses groupings from the
             "ietf-tls-client" and "ietf-tls-server" modules defined in
             <xref target="I-D.ietf-netconf-tls-client-server"/>.  All
@@ -507,7 +507,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             extension "default-deny-write" set, thus preventing
             unrestricted write-access to the data nodes defined
             in those groupings.</t>
-        </aside>
+        <!--</aside>-->
 
         <t>This module does not define any RPCs, actions, or notifications,
           and thus the security consideration for such is not provided here.</t>
@@ -679,7 +679,14 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <section title="10 to 11">
         <t>
           <list style="symbols">
-            <t>Updated per Shepherd reviews.</t>
+            <t>Updated per Shepherd reviews impacting the suite of drafts.</t>
+          </list>
+        </t>
+      </section>
+      <section title="11 to 12">
+        <t>
+          <list style="symbols">
+            <t>Updated per Shepherd reviews impacting the suite of drafts.</t>
           </list>
         </t>
       </section>
@@ -690,6 +697,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
         on list and in the halls (ordered by first name):
           Ben Schwartz,
           Mark Nottingham,
+          Mahesh Jethanandani,
           Rob Wilton (contributor),
           and Willy Tarreau.
       </t>

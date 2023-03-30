@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
@@ -18,11 +17,12 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude"
      category="std"
      consensus="true"
+     submissionType="IETF"
      docName="draft-ietf-netconf-http-client-server-latest"
      ipr="trust200902">
   <front>
     <title abbrev="Groupings for HTTP Clients and Servers">YANG Groupings for
-      HTTP Clients and HTTP Servers</title>
+      HTTP 1.1/2.0 Clients and HTTP Servers</title>
     <author fullname="Kent Watsen" initials="K." surname="Watsen">
       <organization>Watsen Networks</organization>
       <address>
@@ -223,7 +223,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-stack-grouping.no-expand.txt)
             </t>
             <t>Comments:</t>
             <ul>
-              <li>The "http-client-stack-grouping" is a convenience grouping for downstream
+              <li>The "http-client-stack-grouping" is a convenience grouping for consuming
                 modules.  It defines both the "HTTP" and "HTTPS" protocol stacks, with each
                 option enabled by a "feature" statement for application control.</li>
               <li>For the referenced grouping statement(s):
@@ -273,7 +273,11 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-client-proxy.xml)
       </section>
 
       <section anchor="client-yang-module" title="YANG Module">
-        <t>This YANG module has normative references to <xref target="RFC6991"/>.</t>
+        <t>This YANG module has normative references to <xref target="RFC6991"/>
+          <xref target="RFC7617"/>, <xref target="RFC9110"/>, 
+          <xref target="I-D.ietf-netconf-crypto-types"/>,
+          <xref target="I-D.ietf-netconf-tcp-client-server"/>, and
+          <xref target="I-D.ietf-netconf-tls-client-server"/>.</t>
         <t>
           <figure>
             <preamble>&lt;CODE BEGINS&gt; file "ietf-http-client@YYYY-MM-DD.yang"</preamble>
@@ -366,7 +370,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-server-stack-grouping.no-expand.txt)
             </t>
             <t>Comments:</t>
             <ul>
-              <li>The "http-server-stack-grouping" is a convenience grouping for downstream
+              <li>The "http-server-stack-grouping" is a convenience grouping for consuming
                 modules.  It defines both the "HTTP" and "HTTPS" protocol stacks, with each
                 option enabled by a "feature" statement for application control.</li>
               <li>For the referenced grouping statement(s):
@@ -401,7 +405,10 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-server.xml)
       </section>
 
       <section anchor="server-yang-module" title="YANG Module">
-        <t>This YANG module has normative references to <xref target="RFC6991"/>.</t>
+        <t>This YANG module has normative references to <xref target="RFC6991"/>,
+        <xref target="RFC7317"/>, <xref target="RFC7617"/>, <xref target="RFC9110"/>, 
+        <xref target="I-D.ietf-netconf-tcp-client-server"/>, and
+        <xref target="I-D.ietf-netconf-tls-client-server"/>.</t>
         <t>
           <figure>
             <preamble>&lt;CODE BEGINS&gt; file "ietf-http-server@YYYY-MM-DD.yang"</preamble>
@@ -559,9 +566,15 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <?rfc include="reference.RFC.2119.xml"?>
       <?rfc include="reference.RFC.6020.xml"?>
       <?rfc include="reference.RFC.6991.xml"?>
+      <?rfc include="reference.RFC.7317.xml"?>
+      <?rfc include="reference.RFC.7617.xml"?>
       <?rfc include="reference.RFC.7950.xml"?>
       <?rfc include="reference.RFC.8174.xml"?>
       <?rfc include="reference.RFC.8341.xml"?>
+      <?rfc include="reference.RFC.9110.xml"?>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-crypto-types.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tcp-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tls-client-server.xml"/>
     </references>
 
     <references title="Informative References">
@@ -570,12 +583,9 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <?rfc include="reference.RFC.8040.xml"?>
       <?rfc include="reference.RFC.8340.xml"?>
       <?rfc include="reference.RFC.8342.xml"?>
-      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-crypto-types.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-trust-anchors.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-keystore.xml"/>
-      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tcp-client-server.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-ssh-client-server.xml"/>
-      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tls-client-server.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-http-client-server.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-restconf-client-server.xml"/>
@@ -588,7 +598,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Modified Abstract and Intro to be more accurate wrt intended applicability.</t>
             <t>In ietf-http-client, removed "protocol-version" and all auth schemes except "basic".</t>
             <t>In ietf-http-client, factored out "client-identity-grouping" for proxy connections.</t>
-            <t>In ietf-http-server, removed "choice required-or-optional" and "choice local-or-external".</t>
+            <t>In ietf-http-server, removed "choice required-or-optional" and "choice inline-or-external".</t>
             <t>In ietf-http-server, moved the basic auth under a "choice auth-type" limited by new "feature basic-auth".</t>
           </list>
         </t>
@@ -687,6 +697,17 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
         <t>
           <list style="symbols">
             <t>Updated per Shepherd reviews impacting the suite of drafts.</t>
+          </list>
+        </t>
+      </section>
+      <section title="12 to 13">
+        <t>
+          <list style="symbols">
+            <t>Updated per Tom Petch reviews.</t>
+            <t>Renamed draft title to limit to HTTP 1.1 and 2.0.</t>
+            <t>Added refs to RFCs 7317, 7617, and 9110.</t>
+            <t>Added "if-feature local-users-supported" to "feature basic-auth"</t>
+
           </list>
         </t>
       </section>

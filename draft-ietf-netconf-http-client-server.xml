@@ -706,8 +706,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Updated per Tom Petch reviews.</t>
             <t>Renamed draft title to limit to HTTP 1.1 and 2.0.</t>
             <t>Added refs to RFCs 7317, 7617, and 9110.</t>
-            <t>Added "if-feature local-users-supported" to "feature basic-auth"</t>
-
+            <t>Added "if-feature local-users-supported" to "feature basic-auth".</t>
           </list>
         </t>
       </section>

@@ -173,7 +173,6 @@ module ietf-http-server {
                     "The user-id for the authenticating client.";
                 }
                 leaf password {
-                  nacm:default-deny-write;
                   type ianach:crypt-hash;
                   description
                     "The password for the authenticating client.";
@@ -208,14 +207,14 @@ module ietf-http-server {
             "Container for TCP-based HTTP protocols.";
           container tcp-server-parameters {
             description
-              "A wrapper around the TCP parameters to avoid
-               name collisions.";
+              "TCP-level server parameters to
+               listen for HTTP connections.";
             uses tcps:tcp-server-grouping;
           }
           container http-server-parameters {
             description
-              "A wrapper around the HTTP parameters to avoid
-               name collisions.";
+              "HTTP-level server parameters to
+               listen for HTTP connections.";
             uses http-server-grouping;
           }
         }
@@ -227,20 +226,20 @@ module ietf-http-server {
             "Container for TLS-based HTTP protocols.";
           container tcp-server-parameters {
             description
-              "A wrapper around the TCP parameters to avoid
-               name collisions.";
+              "TCP-level server parameters to
+               listen for HTTPS connections.";
             uses tcps:tcp-server-grouping;
           }
           container tls-server-parameters {
             description
-              "A wrapper around the TLS parameters to avoid
-               name collisions.";
+              "TLS-level server parameters to
+               listen for HTTPS connections.";
             uses tlss:tls-server-grouping;
           }
           container http-server-parameters {
             description
-              "A wrapper around the HTTP parameters to avoid
-               name collisions.";
+              "HTTP-level server parameters to
+               listen for HTTPS connections.";
             uses http-server-grouping;
           }
         }

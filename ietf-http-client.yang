@@ -175,7 +175,7 @@ module ietf-http-client {
          configured.";
       description
         "Configures the proxy server the HTTP-client is to
-         connect thru.";
+         connect through.";
       choice proxy-type {
         mandatory true;
         description
@@ -187,14 +187,12 @@ module ietf-http-client {
                configuration parameters.";
             container tcp-client-parameters {
               description
-                "A wrapper around the TCP parameters to avoid
-                 name collisions.";
+                "TCP client parameters.";
               uses tcpc:tcp-client-grouping;
             }
             container http-client-parameters {
               description
-                "A wrapper around the HTTP parameters to avoid
-                 name collisions.";
+                "HTTP client parameters.";
               uses http-client-identity-grouping;
             }
           }
@@ -206,20 +204,17 @@ module ietf-http-client {
                configuration parameters.";
             container tcp-client-parameters {
               description
-                "A wrapper around the TCP parameters to avoid
-                 name collisions.";
+                "TCP client parameters.";
               uses tcpc:tcp-client-grouping;
             }
             container tls-client-parameters {
               description
-                "A wrapper around the TLS parameters to avoid
-                 name collisions.";
+                "TLS client parameters.";
               uses tlsc:tls-client-grouping;
             }
             container http-client-parameters {
               description
-                "A wrapper around the HTTP parameters to avoid
-                 name collisions.";
+                "HTTP client parameters.";
               uses http-client-identity-grouping;
             }
           }
@@ -245,14 +240,12 @@ module ietf-http-client {
             "Container for TCP-based HTTP protocols.";
           container tcp-client-parameters {
             description
-              "A wrapper around the TCP parameters to avoid
-               name collisions.";
+              "TCP client parameters.";
             uses tcpc:tcp-client-grouping;
           }
           container http-client-parameters {
             description
-              "A wrapper around the HTTP parameters to avoid
-               name collisions.";
+              "HTTP client parameters.";
             uses http-client-grouping;
           }
         }
@@ -264,20 +257,17 @@ module ietf-http-client {
             "Container for TLS-based HTTP protocols.";
           container tcp-client-parameters {
             description
-              "A wrapper around the TCP parameters to avoid
-               name collisions.";
+              "TCP client parameters.";
             uses tcpc:tcp-client-grouping;
           }
           container tls-client-parameters {
             description
-              "A wrapper around the TLS parameters to avoid
-               name collisions.";
+              "TLS client parameters.";
             uses tlsc:tls-client-grouping;
           }
           container http-client-parameters {
             description
-              "A wrapper around the HTTP parameters to avoid
-               name collisions.";
+              "HTTP client parameters.";
             uses http-client-grouping;
           }
         }

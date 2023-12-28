@@ -13,26 +13,26 @@
       <tcp-client-parameters>
         <remote-address>corp-fw2.example.com</remote-address>
         <keepalives>
-          <idle-time>15</idle-time>
-          <max-probes>3</max-probes>
-          <probe-interval>30</probe-interval>
+          <idle-time>7200</idle-time>
+          <max-probes>9</max-probes>
+          <probe-interval>75</probe-interval>
         </keepalives>
       </tcp-client-parameters>
       <tls-client-parameters>
         <client-identity>
           <certificate>
-            <keystore-reference>
+            <central-keystore-reference>
               <asymmetric-key>rsa-asymmetric-key</asymmetric-key>
               <certificate>ex-rsa-cert</certificate>
-            </keystore-reference>
+            </central-keystore-reference>
           </certificate>
         </client-identity>
         <server-authentication>
           <ca-certs>
-            <truststore-reference>trusted-server-ca-certs</truststore-reference>
+            <central-truststore-reference>trusted-server-ca-certs</central-truststore-reference>
           </ca-certs>
           <ee-certs>
-            <truststore-reference>trusted-server-ee-certs</truststore-reference>
+            <central-truststore-reference>trusted-server-ee-certs</central-truststore-reference>
           </ee-certs>
         </server-authentication>
       </tls-client-parameters>

@@ -66,8 +66,15 @@
         The text is not wrong as is, but it may be improved by stating more directly how
         many modules are defined.</t>
       <t>The "Relation to other RFCs" section <xref target="collective-effort"/> contains
-        a self-reference to this draft, along with a corresponding Informative Reference in
-        the Appendix.</t>
+          a self-reference to this draft, along with a corresponding reference in
+          the Appendix.  Please replace the self-reference in this section with "This RFC"
+          (or similar) and remove the self-reference in the "Normative/Informative References"
+          section, whichever it is in.</t>
+        <t>Tree-diagrams in this draft may use the '/' line-folding mode defined in RFC 8792.
+          However, nicer-to-the-eye is when the '//' line-folding mode is used.  The AD suggested
+          suggested putting a request here for the RFC Editor to help convert "ugly" '/' folded
+          examples to use the '//' folding mode.  "Help convert" may be interpreted as, identify
+          what looks ugly and ask the authors to make the adjustment.</t>
       <t>The following Appendix section is to be removed prior to publication:
         <list style="symbols">
           <t><xref target="change-log"/>.  Change Log</t>
@@ -95,14 +102,6 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
           installed during manufacturing are expected to appear
           in &lt;operational&gt;.</t>
       </section>
-
-        <section title="Conventions">
-          <t>Various examples used in this document use a placeholder
-            value for binary data that has been base64 encoded (e.g.,
-            "BASE64VALUE=").  This placeholder value is used as real
-            base64 encoded structures are often many lines long and
-            hence distracting to the example being presented.</t>
-        </section>
 
     </section>
 
@@ -186,7 +185,8 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
             </t>
             <t>Comments:</t>
             <ul>
-              <li>The "http-client-grouping" defines the configuration for just
+              <li>The "http-client-grouping" primarily (not including
+                the proxy configuration) defines the configuration for just
                 "HTTP" part of a protocol stack.  It does not, for instance,
                 define any configuration for the "TCP" or "TLS" protocol layers
                 (for that, see <xref target="http-client-stack-grouping"/>).</li>
@@ -242,7 +242,8 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-stack-grouping.no-expand.txt)
 
         <section title="Protocol-accessible Nodes" toc="exclude">
           <t>The "ietf-http-client" module defines only "grouping" statements that are
-            used by other modules to instantiate protocol-accessible nodes.</t>
+          used by other modules to instantiate protocol-accessible nodes.  Thus this
+          module, when implemented, does not define any protocol-accessible nodes.</t>
         </section>
 
       </section>
@@ -250,8 +251,10 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-stack-grouping.no-expand.txt)
       <section title="Example Usage" anchor="client-examples">
         <t>This section presents two examples showing the http-client-grouping
           populated with some data.</t>
-        <t>The following example illustrates an HTTP client connecting directly
-          to an HTTP server.</t>
+        <t>The following example illustrates the case where the HTTP client
+          connects directly to an HTTP server.  Note, the information identifying
+          the remote server (e.g., its hostname) would be configured in the
+          "tcp-client-grouping" (not shown).</t>
         <t>
           <figure>
             <artwork><![CDATA[
@@ -389,7 +392,8 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-server-stack-grouping.no-expand.txt)
 
         <section title="Protocol-accessible Nodes" toc="exclude">
           <t>The "ietf-http-server" module defines only "grouping" statements that are
-            used by other modules to instantiate protocol-accessible nodes.</t>
+          used by other modules to instantiate protocol-accessible nodes.  Thus this
+          module, when implemented, does not define any protocol-accessible nodes.</t>
         </section>
       </section>
 
@@ -436,45 +440,35 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           pre-configured subset of all available protocol operations and
           content.</t>
 
-        <t>Since the module in this document only define groupings,
+        <t>Since this module only defines groupings,
           these considerations are primarily for the designers of other
           modules that use these groupings.</t>
 
-        <t>One readable data node defined in this YANG module may be considered
-          sensitive or vulnerable in some network environments. This
-          node is as follows:
+        <t>Please be aware that this YANG module uses groupings from
+          other YANG modules that define nodes that may be considered
+          sensitive or vulnerable in network environments.  Please
+          review the Security Considerations for dependent YANG modules
+          for information as to which nodes may be considered sensitive
+          or vulnerable in network environments.</t>
+
+        <t>None of the readable data nodes defined in this YANG module
+          are considered sensitive or vulnerable in network environments.
+          The NACM "default-deny-all" extension has not been set for
+          any data nodes defined in this module.</t>
+
+        <t>The follwing writable data nodes defined in this YANG module are
+        considered sensitive or vulnerable in network environments:
           <list style="symbols">
-            <t>The "client-identity/basic/password" node:
-              <ul empty="true">
-                <li>The cleartext "password" node defined in the "http-client-identity-grouping"
-                  grouping is additionally sensitive to read operations such that,
-                  in normal use cases, it should never be returned to a client.
-                  For this reason, the NACM extension "default-deny-all" has been
-                  applied to it.</li>
-              </ul>
-            </t>
+            <t>The "client-identity" node in the "http-client-identity-grouping"
+              grouping may be considered sensitive or vulnerable in some
+              network environments.  For this reason, it NACM extension
+              "default-deny-write" has been applied to it.</t>
+            <t>The "proxy-connect" node in the "http-client-grouping"
+              grouping may be considered sensitive or vulnerable in some
+              network environments.  For this reason, it NACM extension
+              "default-deny-write" has been applied to it.</t>
           </list>
         </t>
-        <!--<aside>-->
-          <t>Please be aware that this module uses the "key" and "private-key"
-            nodes from the "ietf-crypto-types" module <xref target="I-D.ietf-netconf-crypto-types"/>,
-            where said nodes have the NACM extension "default-deny-all" set, thus
-            preventing unrestricted read-access to the cleartext key values.</t>
-        <!--</aside>-->
-
-        <t>None of the writable data nodes defined in this YANG module are
-          considered sensitive or vulnerable in network environments.
-          The NACM "default-deny-write" extension has not been set for
-          any data nodes defined in this module.</t>
-        <!--<aside>-->
-          <t>Please be aware that this module uses groupings from the
-            "ietf-tls-client" and "ietf-tls-server" modules defined in
-            <xref target="I-D.ietf-netconf-tls-client-server"/>.  All
-            of the data nodes defined in these groupings have the NACM
-            extension "default-deny-write" set, thus preventing
-            unrestricted write-access to the data nodes defined
-            in those groupings.</t>
-        <!--</aside>-->
 
         <t>This module does not define any RPCs, actions, or notifications,
           and thus the security consideration for such is not provided here.</t>
@@ -493,28 +487,35 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           pre-configured subset of all available protocol operations and
           content.</t>
 
-        <t>Since the module in this document only define groupings,
+        <t>Since this module only defines groupings,
           these considerations are primarily for the designers of other
           modules that use these groupings.</t>
+
+        <t>Please be aware that this YANG module uses groupings from
+          other YANG modules that define nodes that may be considered
+          sensitive or vulnerable in network environments.  Please
+          review the Security Considerations for dependent YANG modules
+          for information as to which nodes may be considered sensitive
+          or vulnerable in network environments.</t>
 
         <t>None of the readable data nodes defined in this YANG module are
           considered sensitive or vulnerable in network environments.
           The NACM "default-deny-all" extension has not been set for
           any data nodes defined in this module.</t>
 
-        <t>None of the writable data nodes defined in this YANG module are
-          considered sensitive or vulnerable in network environments.
-          The NACM "default-deny-write" extension has not been set for
-          any data nodes defined in this module.</t>
-        <!--<aside>-->
-          <t>Please be aware that this module uses groupings from the
-            "ietf-tls-client" and "ietf-tls-server" modules defined in
-            <xref target="I-D.ietf-netconf-tls-client-server"/>.  All
-            of the data nodes defined in these groupings have the NACM
-            extension "default-deny-write" set, thus preventing
-            unrestricted write-access to the data nodes defined
-            in those groupings.</t>
-        <!--</aside>-->
+        <t>The follwing writable data nodes defined in this YANG module are
+        considered sensitive or vulnerable in network environments:
+          <list style="symbols">
+            <t>The "server-name" node in the "http-server-grouping"
+              grouping may be considered sensitive or vulnerable in some
+              network environments.  For this reason, it NACM extension
+              "default-deny-write" has been applied to it.</t>
+            <t>The "client-authentication" node in the "http-server-grouping"
+              grouping may be considered sensitive or vulnerable in some
+              network environments.  For this reason, it NACM extension
+              "default-deny-write" has been applied to it.</t>
+          </list>
+        </t>
 
         <t>This module does not define any RPCs, actions, or notifications,
           and thus the security consideration for such is not provided here.</t>
@@ -707,6 +708,19 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Renamed draft title to limit to HTTP 1.1 and 2.0.</t>
             <t>Added refs to RFCs 7317, 7617, and 9110.</t>
             <t>Added "if-feature local-users-supported" to "feature basic-auth".</t>
+          </list>
+        </t>
+      </section>
+      <section title="13 to 14">
+        <t>
+          <list style="symbols">
+              <t>Addresses AD review comments.</t>
+              <t>Added note to Editor to fix line foldings.</t>
+              <t>Removed "Conventions" section as there are no "BASE64VALUE=" values used in draft.</t>
+              <t>Clarified that the modules, when implemented, do not define any protocol-accessible nodes.</t>
+              <t>Added Security Considerations text to also look a SC-section from imported modules.</t>
+              <t>Removed "A wrapper around the foobar parameters to avoid name collisions" text.</t>
+              <t>Removed "public-key-format" and "public-key" nodes from examples.</t>
           </list>
         </t>
       </section>

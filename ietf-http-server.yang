@@ -3,6 +3,12 @@ module ietf-http-server {
   namespace "urn:ietf:params:xml:ns:yang:ietf-http-server";
   prefix https;
 
+  import ietf-yang-types {
+    prefix yang;
+    reference
+      "RFC 6991: Common YANG Data Types";
+  }
+
   import iana-crypt-hash {
     prefix ianach;
     reference
@@ -167,15 +173,29 @@ module ietf-http-server {
             case basic {
               container basic {
                 if-feature "basic-auth";
-                leaf user-id {
+                leaf username {
                   type string;
                   description
-                    "The user-id for the authenticating client.";
+                    "The username for the authenticating HTTP
+                     client.";
                 }
-                leaf password {
-                  type ianach:crypt-hash;
+                container password {
                   description
-                    "The password for the authenticating client.";
+                    "The hashed password the HTTP server uses to
+                     authenticate this user.  A user is authenticated
+                     if the hash of the supplied password matches
+                     this value.";
+                  leaf hashed-password {
+                    type ianach:crypt-hash;
+                    description
+                      "The password for the authenticating client.";
+                  }
+                  leaf last-modified {
+                    type yang:date-and-time;
+                    config false;
+                    description
+                      "Identifies when the password was last set.";
+                  }
                 }
                 description
                   "The 'basic' HTTP scheme credentials.";

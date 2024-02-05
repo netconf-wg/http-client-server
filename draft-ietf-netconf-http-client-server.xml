@@ -427,7 +427,9 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
 
     <section title="Security Considerations">
 
-      <section title="The &quot;ietf-http-client&quot; YANG Module">
+      <section title="Template for the &quot;ietf-http-client&quot; YANG Module">
+        <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
+
         <t>The "ietf-http-client" YANG module defines "grouping" statements
           that are designed to be accessed via YANG based management
           protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
@@ -474,7 +476,9 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           and thus the security consideration for such is not provided here.</t>
       </section>
 
-      <section title="The &quot;ietf-http-server&quot; YANG Module">
+      <section title="Template for the &quot;ietf-http-server&quot; YANG Module">
+        <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
+
         <t>The "ietf-http-server" YANG module defines "grouping" statements
           that are designed to be accessed via YANG based management
           protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
@@ -584,6 +588,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <?rfc include="reference.RFC.8040.xml"?>
       <?rfc include="reference.RFC.8340.xml"?>
       <?rfc include="reference.RFC.8342.xml"?>
+        <?rfc include="reference.RFC.8407.xml"?>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-trust-anchors.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-keystore.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-ssh-client-server.xml"/>
@@ -731,6 +736,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
            </list>
          </t> 
        </section>
+        <section title="15 to 16">
+          <t>  
+            <list style="symbols">
+              <t>Addresses 1st-round of IESG reviews.</t>
+            </list>
+          </t> 
+        </section>
     </section>
 
     <section title="Acknowledgements" numbered="no">

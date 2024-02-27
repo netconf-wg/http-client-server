@@ -22,7 +22,7 @@
      ipr="trust200902">
   <front>
     <title abbrev="Groupings for HTTP Clients and Servers">YANG Groupings for
-      HTTP 1.1/2.0 Clients and HTTP Servers</title>
+      HTTP Clients and HTTP Servers</title>
     <author fullname="Kent Watsen" initials="K." surname="Watsen">
       <organization>Watsen Networks</organization>
       <address>
@@ -33,12 +33,12 @@
     <area>Operations</area>
     <workgroup>NETCONF Working Group</workgroup>
     <abstract>
-      <t>This document defines two YANG modules: the first defines a minimal
+      <t>This document presents two YANG modules: the first defines a minimal
         grouping for configuring an HTTP client, and the second defines
         a minimal grouping for configuring an HTTP server.  It is
         intended that these groupings will be used to help define the
         configuration for simple HTTP-based protocols (not for complete
-        web servers or browsers).</t>
+        web servers or browsers).  Support is provided for HTTP/1.1, HTTP/2, and HTTP/3.</t>
     </abstract>
     <note title="Editorial Note (To be removed by RFC Editor)">
       <t>This draft contains placeholder values that need to be replaced
@@ -85,12 +85,12 @@
 
   <middle>
     <section title="Introduction">
-      <t>This document defines two YANG 1.1 <xref target="RFC7950"/> modules: the first defines a minimal
+      <t>This document presents two YANG 1.1 <xref target="RFC7950"/> modules: the first defines a minimal
         grouping for configuring an HTTP client, and the second defines
         a minimal grouping for configuring an HTTP server.  It is
         intended that these groupings will be used to help define the
-        configuration for simple HTTP-based protocols (not for complete
-        web servers or browsers).</t>
+        configuration for simple HTTP-based protocols.  Support is
+        provided for HTTP/1.1, HTTP/2, and HTTP/3.</t>
 
 INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
 
@@ -100,7 +100,8 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
           described in <xref target="I-D.ietf-netconf-trust-anchors"/> and
           <xref target="I-D.ietf-netconf-keystore"/>, trust anchors and keys
           installed during manufacturing are expected to appear
-          in &lt;operational&gt;.</t>
+          in &lt;operational&gt; (<xref section="5.3" target="RFC8342"/>), and &lt;system&gt;
+          <xref target="I-D.ietf-netmod-system-config"/>, if implemented.</t>
       </section>
 
     </section>
@@ -125,10 +126,12 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
             <figure>
               <artwork><![CDATA[
 Features:
-  +-- proxy-connect
   +-- basic-auth
   +-- tcp-supported
   +-- tls-supported
+  +-- proxy-connect
+      +-- http-connect
+      +-- https-connect
 ]]></artwork>
             </figure>
           </t>
@@ -186,7 +189,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
             <t>Comments:</t>
             <ul>
               <li>The "http-client-grouping" primarily (not including
-                the proxy configuration) defines the configuration for just
+                the proxy configuration) defines the configuration for just the
                 "HTTP" part of a protocol stack.  It does not, for instance,
                 define any configuration for the "TCP" or "TLS" protocol layers
                 (for that, see <xref target="http-client-stack-grouping"/>).</li>
@@ -198,6 +201,8 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
                 mandatory descendant nodes do not imply that this node must
                 be configured, assuming the server supports the "proxy-connect"
                 feature.</li>
+              <li>The "proxy-connect" node defines support for HTTP 1.1 and HTTP 2.0.  Support
+                for other protocol versions, e.g., HTTP/3, MAY be added by future work.</li>
               <li>For the referenced grouping statement(s):
                 <ul spacing="compact">
                   <li>The "http-client-identity-grouping" grouping is discussed in
@@ -224,10 +229,13 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-stack-grouping.no-expand.txt)
             <t>Comments:</t>
             <ul>
               <li>The "http-client-stack-grouping" is a convenience grouping for consuming
-                modules.  It defines both the "HTTP" and "HTTPS" protocol stacks, with each
-                option enabled by a "feature" statement for application control.</li>
+                modules.  It defines protocol stacks for HTTP/1.1, HTTP/2, and HTTP/3, with each
+                option enabled by a "feature" statement for application control.  Other
+                protocols may be added by future work using the YANG "augment" statement.</li>
               <li>For the referenced grouping statement(s):
                 <ul spacing="compact">
+                  <li>The "udp-client-grouping" grouping is discussed in
+                    <relref section="2" target="I-D.ietf-netconf-udp-client-server"/>.</li>
                   <li>The "tcp-client-grouping" grouping is discussed in
                     <relref section="3.1.2.1" target="I-D.ietf-netconf-tcp-client-server"/>.</li>
                   <li>The "tls-client-grouping" grouping is discussed in
@@ -277,10 +285,11 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-client-proxy.xml)
 
       <section anchor="client-yang-module" title="YANG Module">
         <t>This YANG module has normative references to <xref target="RFC6991"/>
-          <xref target="RFC7617"/>, <xref target="RFC9110"/>, 
+          <xref target="RFC7617"/>, <xref target="RFC9110"/>, <xref target="RFC9114"/>,
           <xref target="I-D.ietf-netconf-crypto-types"/>,
-          <xref target="I-D.ietf-netconf-tcp-client-server"/>, and
-          <xref target="I-D.ietf-netconf-tls-client-server"/>.</t>
+          <xref target="I-D.ietf-netconf-tcp-client-server"/>,
+          <xref target="I-D.ietf-netconf-tls-client-server"/>, and
+          <xref target="I-D.ietf-netconf-udp-client-server"/>.</t>
         <t>
           <figure>
             <preamble>&lt;CODE BEGINS&gt; file "ietf-http-client@YYYY-MM-DD.yang"</preamble>
@@ -347,7 +356,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-server-grouping.no-expand.txt)
             </t>
             <t>Comments:</t>
             <ul>
-              <li>The "http-server-grouping" defines the configuration for just
+              <li>The "http-server-grouping" defines the configuration for just the
                 "HTTP" part of a protocol stack.  It does not, for instance,
                 define any configuration for the "TCP" or "TLS" protocol layers
                 (for that, see <xref target="http-server-stack-grouping"/>).</li>
@@ -374,10 +383,13 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-server-stack-grouping.no-expand.txt)
             <t>Comments:</t>
             <ul>
               <li>The "http-server-stack-grouping" is a convenience grouping for consuming
-                modules.  It defines both the "HTTP" and "HTTPS" protocol stacks, with each
-                option enabled by a "feature" statement for application control.</li>
+                modules.  It defines protocol stacks for HTTP/1.1, HTTP/2, and HTTP/3, with each
+                option enabled by a "feature" statement for application control.  Other
+                protocols may be added by future work using the YANG "augment" statement.</li>
               <li>For the referenced grouping statement(s):
                 <ul spacing="compact">
+                  <li>The "udp-server-grouping" grouping is discussed in
+                    <relref section="3" target="I-D.ietf-netconf-udp-client-server"/>.</li>
                   <li>The "tcp-server-grouping" grouping is discussed in
                     <relref section="4.1.2.1" target="I-D.ietf-netconf-tcp-client-server"/>.</li>
                   <li>The "tls-server-grouping" grouping is discussed in
@@ -427,7 +439,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
 
     <section title="Security Considerations">
 
-      <section title="Template for the &quot;ietf-http-client&quot; YANG Module">
+      <section title="Considerations for the &quot;ietf-http-client&quot; YANG Module">
         <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
 
         <t>The "ietf-http-client" YANG module defines "grouping" statements
@@ -453,22 +465,28 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           for information as to which nodes may be considered sensitive
           or vulnerable in network environments.</t>
 
-        <t>None of the readable data nodes defined in this YANG module
+        <t>None of the readable data nodes defined in this YANG module,
+          i.e., excluding imported modules,
           are considered sensitive or vulnerable in network environments.
           The NACM "default-deny-all" extension has not been set for
           any data nodes defined in this module.</t>
 
-        <t>The follwing writable data nodes defined in this YANG module are
-        considered sensitive or vulnerable in network environments:
+        <t>The follwing writable data nodes defined in this YANG module, i.e.,
+          excluding imported modules, are considered sensitive or vulnerable
+          in network environments:
           <list style="symbols">
             <t>The "client-identity" node in the "http-client-identity-grouping"
               grouping may be considered sensitive or vulnerable in some
-              network environments.  For this reason, it NACM extension
-              "default-deny-write" has been applied to it.</t>
+              network environments.  For this reason, the NACM extension
+              "default-deny-write" has been applied to it.  A misconfigured
+              "client-identity" node may result in loss of 
+              connectivity or, perhaps, unexpectedly elevated authorization.</t>
             <t>The "proxy-connect" node in the "http-client-grouping"
               grouping may be considered sensitive or vulnerable in some
-              network environments.  For this reason, it NACM extension
-              "default-deny-write" has been applied to it.</t>
+              network environments.  For this reason, the NACM extension
+              "default-deny-write" has been applied to it.  A misconfigured
+              "proxy-connect" node may result in loss of connectivity
+              or, perhaps, unexpectedly elevated authorization.</t>
           </list>
         </t>
 
@@ -476,7 +494,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           and thus the security consideration for such is not provided here.</t>
       </section>
 
-      <section title="Template for the &quot;ietf-http-server&quot; YANG Module">
+      <section title="Considerations for the &quot;ietf-http-server&quot; YANG Module">
         <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
 
         <t>The "ietf-http-server" YANG module defines "grouping" statements
@@ -502,22 +520,32 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           for information as to which nodes may be considered sensitive
           or vulnerable in network environments.</t>
 
-        <t>None of the readable data nodes defined in this YANG module are
+        <t>None of the readable data nodes defined in this YANG module,
+          i.e., excluding imported modules, are
           considered sensitive or vulnerable in network environments.
           The NACM "default-deny-all" extension has not been set for
           any data nodes defined in this module.</t>
 
-        <t>The follwing writable data nodes defined in this YANG module are
-        considered sensitive or vulnerable in network environments:
+        <t>The follwing writable data nodes defined in this YANG module,
+          i.e., excluding imported modules, are considered sensitive or
+          vulnerable in network environments:
           <list style="symbols">
             <t>The "server-name" node in the "http-server-grouping"
               grouping may be considered sensitive or vulnerable in some
-              network environments.  For this reason, it NACM extension
-              "default-deny-write" has been applied to it.</t>
+              network environments.  For this reason, the NACM extension
+              "default-deny-write" has been applied to it.  A misconfigured
+              "server-name" may mislead clients into not knowing how to 
+              interoperate with the server (e.g., "foo v1.0" vs "foo 2.0").</t>
             <t>The "client-authentication" node in the "http-server-grouping"
               grouping may be considered sensitive or vulnerable in some
-              network environments.  For this reason, it NACM extension
-              "default-deny-write" has been applied to it.</t>
+              network environments.  For this reason, the NACM extension
+              "default-deny-write" has been applied to it.  The feature
+              "tls-supported" is not required, in order to support
+              cases where an external device is used to terminate TLS
+              connections, but such arrangements leave the client-
+              credentials to be unprotected by the transport.  Misconfigured
+              "client-authentication" may lead the server to authenticate
+              invalid client credentials.</t>
           </list>
         </t>
 
@@ -577,9 +605,11 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <?rfc include="reference.RFC.8174.xml"?>
       <?rfc include="reference.RFC.8341.xml"?>
       <?rfc include="reference.RFC.9110.xml"?>
+      <?rfc include="reference.RFC.9114.xml"?>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-crypto-types.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tcp-client-server.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-tls-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-udp-client-server.xml"/>
     </references>
 
     <references title="Informative References">
@@ -595,9 +625,10 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-http-client-server.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-restconf-client-server.xml"/>
+      <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netmod-system-config.xml"/>
     </references>
 
-    <section title="Change Log" removeInRFC="true" anchor="change-log">
+    <section title="Change Log" anchor="change-log">
       <section title="00 to 01">
         <t>
           <list style="symbols">
@@ -729,29 +760,45 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </list>
         </t>
       </section>
-       <section title="14 to 15">
-         <t>  
-           <list style="symbols">
-             <t>Addresses AD review by Rob Wilton.</t>
-           </list>
-         </t> 
-       </section>
-        <section title="15 to 16">
-          <t>  
-            <list style="symbols">
-              <t>Addresses 1st-round of IESG reviews.</t>
-            </list>
-          </t> 
-        </section>
+      <section title="14 to 15">
+        <t>  
+          <list style="symbols">
+            <t>Addresses AD review by Rob Wilton.</t>
+          </list>
+        </t> 
+      </section>
+      <section title="15 to 16">
+        <t>  
+          <list style="symbols">
+            <t>Addresses 1st-round of IESG reviews.</t>
+          </list>
+        </t> 
+      </section>
+      <section title="16 to 18">
+        <t>  
+          <list style="symbols">
+            <t>Addresses issues found in OpsDir review of the ssh-client-server draft.</t>
+            <t>s/defines/presents/ in a few places.</t>
+            <t>Add refs to where the 'operational' and 'system' datastores are defined.</t>
+            <t>Renamed Security Considerations section s/Template for/Considerations for/.</t>
+            <t>Updated "http-client-stack-grouping" and "http-server-stack-grouping" for HTTP/3.</t>
+          </list>
+        </t> 
+      </section>
     </section>
 
     <section title="Acknowledgements" numbered="no">
-      <t>The authors would like to thank for following for lively discussions
+      <t>The authors would like to thank the following for lively discussions
         on list and in the halls (ordered by first name):
           Ben Schwartz,
+          Éric Vyncke,
           Mark Nottingham,
           Mahesh Jethanandani,
+          Murray Kucherawy,
+          Orie Steele,
           Rob Wilton,
+          Roman Danyliw,
+          Shivan Sahib,
           and Willy Tarreau.
       </t>
     </section>

@@ -61,7 +61,7 @@ $(next).xml: $(draft).xml ietf-http-client.yang ietf-http-server.yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../tls-client-server/ietf-tls-client.yang > ietf-tls-client\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../tls-client-server/ietf-tls-server.yang > ietf-tls-server\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../tls-client-server/ietf-tls-common.yang > ietf-tls-common\@$(shell date +%Y-%m-%d).yang
-	cp ../tls-client-server/iana-tls-cipher-suite-algs.yang iana-tls-cipher-suite-algs\@2022-06-16.yang
+	cp ../tls-client-server/iana-tls-cipher-suite-algs.yang iana-tls-cipher-suite-algs\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ietf-http-client.yang > ietf-http-client\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ietf-http-server.yang > ietf-http-server\@$(shell date +%Y-%m-%d).yang
 	cd refs && ./validate-all.sh && ./gen-trees.sh && cd ..

@@ -9,7 +9,7 @@
     </basic>
   </client-identity>
   <proxy-connect>
-    <https-proxy>
+    <https-connect>
       <tcp-client-parameters>
         <remote-address>corp-fw2.example.com</remote-address>
         <keepalives>
@@ -44,6 +44,6 @@
           </basic>
         </client-identity>
       </http-client-parameters>
-    </https-proxy>
+    </https-connect>
   </proxy-connect>
 </http-client>

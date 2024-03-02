@@ -439,6 +439,12 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
 
     <section title="Security Considerations">
 
+      <t>The two YANG modules in this document define groupings and will
+        not be deployed as standalone modules. Their security implications
+        may be context dependent based on their use in other modules.  The
+        designers of modules which import these grouping must conduct their
+        own analysis of the security considerations.</t>
+
       <section title="Considerations for the &quot;ietf-http-client&quot; YANG Module">
         <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
 
@@ -453,10 +459,6 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           provides the means to restrict access for particular users to a
           pre-configured subset of all available protocol operations and
           content.</t>
-
-        <t>Since this module only defines groupings,
-          these considerations are primarily for the designers of other
-          modules that use these groupings.</t>
 
         <t>Please be aware that this YANG module uses groupings from
           other YANG modules that define nodes that may be considered
@@ -508,10 +510,6 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           provides the means to restrict access for particular users to a
           pre-configured subset of all available protocol operations and
           content.</t>
-
-        <t>Since this module only defines groupings,
-          these considerations are primarily for the designers of other
-          modules that use these groupings.</t>
 
         <t>Please be aware that this YANG module uses groupings from
           other YANG modules that define nodes that may be considered
@@ -782,6 +780,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Add refs to where the 'operational' and 'system' datastores are defined.</t>
             <t>Renamed Security Considerations section s/Template for/Considerations for/.</t>
             <t>Updated "http-client-stack-grouping" and "http-server-stack-grouping" for HTTP/3.</t>
+          </list>
+        </t> 
+      </section>
+      <section title="18 to 19">
+        <t>  
+          <list style="symbols">
+            <t>Address IESG review comments.</t>
           </list>
         </t> 
       </section>

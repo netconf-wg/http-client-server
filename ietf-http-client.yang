@@ -226,7 +226,15 @@ module ietf-http-client {
             container tcp-client-parameters {
               description
                 "TCP client parameters.";
-              uses tcpc:tcp-client-grouping;
+              uses tcpc:tcp-client-grouping {
+                refine "remote-port" {
+                  default "80";
+                  description
+                    "The HTTP client will attempt to connect
+                     to the IANA-assigned well-known port for
+                     'http' (80) if no value is specified.";
+                }
+              }
             }
             container http-client-parameters {
               description
@@ -247,7 +255,15 @@ module ietf-http-client {
             container tcp-client-parameters {
               description
                 "TCP client parameters.";
-              uses tcpc:tcp-client-grouping;
+              uses tcpc:tcp-client-grouping {
+                refine "remote-port" {
+                  default "443";
+                  description
+                    "The HTTP client will attempt to connect
+                     to the IANA-assigned well-known port for
+                     'https' (443) if no value is specified.";
+                }
+              }
             }
             container tls-client-parameters {
               description
@@ -283,7 +299,15 @@ module ietf-http-client {
           container tcp-client-parameters {
             description
               "TCP client parameters.";
-            uses tcpc:tcp-client-grouping;
+            uses tcpc:tcp-client-grouping {
+              refine "remote-port" {
+                default "80";
+                description
+                  "The HTTP client will attempt to connect
+                   to the IANA-assigned well-known port for
+                   'http' (80) if no value is specified.";
+              }
+            }
           }
           container http-client-parameters {
             description
@@ -300,7 +324,15 @@ module ietf-http-client {
           container tcp-client-parameters {
             description
               "TCP client parameters.";
-            uses tcpc:tcp-client-grouping;
+            uses tcpc:tcp-client-grouping {
+              refine "remote-port" {
+                default "443";
+                description
+                  "The HTTP client will attempt to connect
+                   to the IANA-assigned well-known port for
+                   'https' (443) if no value is specified.";
+              }
+            }
           }
           container tls-client-parameters {
             description

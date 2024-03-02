@@ -243,7 +243,15 @@ module ietf-http-server {
             description
               "TCP-level server parameters to
                listen for HTTP connections.";
-            uses tcps:tcp-server-grouping;
+            uses tcps:tcp-server-grouping {
+              refine "local-port" {
+                default "80";
+                description
+                  "The HTTP client will attempt to connect
+                   to the IANA-assigned well-known port for
+                   'http' (80) if no value is specified.";
+              }
+            }
           }
           container http-server-parameters {
             description
@@ -262,7 +270,15 @@ module ietf-http-server {
             description
               "TCP-level server parameters to
                listen for HTTPS connections.";
-            uses tcps:tcp-server-grouping;
+            uses tcps:tcp-server-grouping {
+              refine "local-port" {
+                default "443";
+                description
+                  "The HTTP client will attempt to connect
+                   to the IANA-assigned well-known port for
+                   'https' (443) if no value is specified.";
+              }
+            }
           }
           container tls-server-parameters {
             description

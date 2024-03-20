@@ -790,6 +790,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </list>
         </t> 
       </section>
+      <section title="19 to 20">
+        <t>   
+          <list style="symbols">
+            <t>Updated to reflect comments from Paul Wouters.</t>
+          </list>
+        </t> 
+      </section>
     </section>
 
     <section title="Acknowledgements" numbered="no">

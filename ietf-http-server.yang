@@ -244,7 +244,7 @@ module ietf-http-server {
               "TCP-level server parameters to
                listen for HTTP connections.";
             uses tcps:tcp-server-grouping {
-              refine "local-port" {
+              refine "local-bind/local-port" {
                 default "80";
                 description
                   "The HTTP client will attempt to connect
@@ -271,7 +271,7 @@ module ietf-http-server {
               "TCP-level server parameters to
                listen for HTTPS connections.";
             uses tcps:tcp-server-grouping {
-              refine "local-port" {
+              refine "local-bind/local-port" {
                 default "443";
                 description
                   "The HTTP client will attempt to connect

@@ -3,34 +3,22 @@ module ietf-http-client {
   namespace "urn:ietf:params:xml:ns:yang:ietf-http-client";
   prefix httpc;
 
+  import ietf-inet-types {
+    prefix inet;
+    reference
+      "RFC 6991: Common YANG Data Types";
+  }
+
   import ietf-netconf-acm {
     prefix nacm;
     reference
       "RFC 8341: Network Configuration Access Control Model";
   }
 
-  import ietf-crypto-types {
-    prefix ct;
-    reference
-      "RFC AAAA: YANG Data Types and Groupings for Cryptography";
-  }
-
-  import ietf-tcp-client {
-    prefix tcpc;
-    reference
-      "RFC DDDD: YANG Groupings for TCP Clients and TCP Servers";
-  }
-
   import ietf-tls-client {
     prefix tlsc;
     reference
       "RFC FFFF: YANG Groupings for TLS Clients and TLS Servers";
-  }
-
-  import ietf-udp-client {
-    prefix udpc;
-    reference
-      "RFC JJJJ: YANG Groupings for UDP Clients and UDP Servers";
   }
 
   organization
@@ -75,20 +63,11 @@ module ietf-http-client {
 
   // Features
 
-  feature basic-auth {
+  feature proxy-connect {
     description
       "Indicates that the server supports configuring HTTP
-       clients to authenticate themselves to an HTTP server
-       using the 'basic' HTTP authentication scheme.";
-    reference
-      "RFC 7617: The 'Basic' HTTP Authentication Scheme";
-  }
-
-  feature tcp-supported {
-    description
-      "Indicates that the server supports configuring
-       HTTP 1.1/2.0 clients to initiate HTTP 1.1/2.0
-       connections over TCP.";
+       clients to connect to a remote HTTP server via a
+       proxy, per Section 9.3.6 of RFC 9110.";
     reference
       "RFC 9110: HTTP Semantics";
   }
@@ -96,279 +75,62 @@ module ietf-http-client {
   feature tls-supported {
     description
       "Indicates that the server supports configuring
-       HTTP 1.1/2.0 clients to initiate HTTP 1.1/2.0
-       connections over TLS.";
-    reference
-      "RFC 9110: HTTP Semantics";
-  }
-
-  feature quic-supported {
-    description
-      "Indicates that the server supports configuring
-       HTTP/3 clients to initiate connections over QUIC.";
-    reference
-      "RFC 9114: HTTP/3";
-  }
-
-  feature proxy-connect {
-    description
-      "Indicates that the server supports configuring HTTP
-       clients to connect to a remote HTTP server via a
-       proxy.";
-  }
-
-  feature http-connect-proxy {
-    if-feature proxy-connect;
-    description
-      "Indicates that the server supports configuring
-       HTTP clients to proxy clients through an HTTP
-       connect proxy, , per Section 9.3.6 of RFC 9110.";
-    reference
-      "RFC 9110: HTTP Semantics";
-  }
-
-  feature https-connect-proxy {
-    if-feature proxy-connect;
-    description
-      "Indicates that the server supports configuring
-       HTTP clients to proxy clients through an HTTPS
-       connect proxy, , per Section 9.3.6 of RFC 9110.";
+       HTTP client certificates.";
     reference
       "RFC 9110: HTTP Semantics";
   }
 
   // Groupings
 
-  grouping http-client-identity-grouping {
-    description
-      "A grouping to provide HTTP credentials used by the
-       client to authenticate itself to the HTTP server.";
-    container client-identity {
-      nacm:default-deny-write;
-      presence
-        "Indicates that a client identity has been configured.
-         This statement is present so the mandatory descendant
-         nodes do not imply that this node must be configured.";
-      description
-        "The identity the HTTP client should use when
-         authenticating itself to the HTTP server.";
-      choice auth-type {
-        mandatory true;
-        description
-          "A choice amongst available authentication types.";
-        case basic {
-          container basic {
-            if-feature "basic-auth";
-            leaf user-id {
-              type string;
-              mandatory true;
-              description
-                "The user-id for the authenticating client.";
-            }
-            uses ct:password-grouping {
-              description
-                "The password for the authenticating client.";
-            }
-            description
-              "The 'basic' HTTP scheme credentials.";
-            reference
-              "RFC 7617: The 'Basic' HTTP Authentication Scheme";
-          }
-        }
-      }
-    }
-  } // grouping http-client-identity-grouping
-
   grouping http-client-grouping {
     description
-      "A reusable grouping for configuring a HTTP client.
+      "A reusable grouping for configuring an HTTP client.";
 
-       This grouping is expected to be used in conjunction with
-       other configurations providing, e.g., the hostname or IP
-       address and port number the client initiates connections
-       to.
-
-       Note that this grouping uses fairly typical descendant
-       node names such that a stack of 'uses' statements will
-       have name conflicts.  It is intended that the consuming
-       data model will resolve the issue (e.g., by wrapping
-       the 'uses' statement in a container called
-       'http-client-parameters').  This model purposely does
-       not do this itself so as to provide maximum flexibility
-       to consuming models.";
-
-    uses http-client-identity-grouping;
-
-    container proxy-connect {
-      nacm:default-deny-write;
-      if-feature "proxy-connect";
-      presence
-        "Indicates that a proxy server connections have been
-         configured.  This statement is present so the mandatory
-         descendant nodes do not imply that this node must be
-         configured.";
-      description
-        "Configures the proxy server the HTTP-client is to
-         connect through.";
-      choice proxy-type {
-        mandatory true;
-        description
-          "Choice amongst proxy server types.";
-        case http {
-          if-feature http-connect-proxy;
-          container http-connect {
-            description
-              "Container for HTTP Proxy (Web Proxy) server
-               configuration parameters, per Section 9.3.6
-               of RFC 9110.";
-            reference
-              "RFC 9110: HTTP Semantics";
-            container tcp-client-parameters {
-              description
-                "TCP client parameters.";
-              uses tcpc:tcp-client-grouping {
-                refine "remote-port" {
-                  default "80";
-                  description
-                    "The HTTP client will attempt to connect
-                     to the IANA-assigned well-known port for
-                     'http' (80) if no value is specified.";
-                }
-              }
-            }
-            container http-client-parameters {
-              description
-                "HTTP client parameters.";
-              uses http-client-identity-grouping;
-            }
-          }
-        }
-        case https {
-          if-feature https-connect-proxy;
-          container https-connect {
-            description
-              "Container for HTTPS Proxy (Secure Web Proxy)
-               server configuration parameters, per Section
-               9.3.6 of RFC 9110.";
-            reference
-              "RFC 9110: HTTP Semantics";
-            container tcp-client-parameters {
-              description
-                "TCP client parameters.";
-              uses tcpc:tcp-client-grouping {
-                refine "remote-port" {
-                  default "443";
-                  description
-                    "The HTTP client will attempt to connect
-                     to the IANA-assigned well-known port for
-                     'https' (443) if no value is specified.";
-                }
-              }
-            }
-            container tls-client-parameters {
-              description
-                "TLS client parameters.";
-              uses tlsc:tls-client-grouping;
-            }
-            container http-client-parameters {
-              description
-                "HTTP client parameters.";
-              uses http-client-identity-grouping;
-            }
-          }
-        }
-      }
-    }
-  } // grouping http-client-grouping
-
-  grouping http-client-stack-grouping {
-    description
-      "A grouping that defines common HTTP-based protocol stacks.";
-    choice transport {
+    leaf uri {
+      nacm:default-deny-all;
+      type inet:uri;
       mandatory true;
       description
-        "Choice amongst various transports type.  TCP, with and
-         without TLS are defined here, with 'feature' statements
-         so that they may be disabled.  Other transports MAY be
-         augmented in as 'case' statements by future efforts.";
-      case tcp {
-        if-feature "tcp-supported";
-        container tcp {
-          description
-            "Container for TCP-based HTTP protocols.";
-          container tcp-client-parameters {
-            description
-              "TCP client parameters.";
-            uses tcpc:tcp-client-grouping {
-              refine "remote-port" {
-                default "80";
-                description
-                  "The HTTP client will attempt to connect
-                   to the IANA-assigned well-known port for
-                   'http' (80) if no value is specified.";
-              }
-            }
-          }
-          container http-client-parameters {
-            description
-              "HTTP client parameters.";
-            uses http-client-grouping;
-          }
-        }
-      }
-      case tls {
-        if-feature "tls-supported";
-        container tls {
-          description
-            "Container for TLS-based HTTP protocols.";
-          container tcp-client-parameters {
-            description
-              "TCP client parameters.";
-            uses tcpc:tcp-client-grouping {
-              refine "remote-port" {
-                default "443";
-                description
-                  "The HTTP client will attempt to connect
-                   to the IANA-assigned well-known port for
-                   'https' (443) if no value is specified.";
-              }
-            }
-          }
-          container tls-client-parameters {
-            description
-              "TLS client parameters.";
-            uses tlsc:tls-client-grouping;
-          }
-          container http-client-parameters {
-            description
-              "HTTP client parameters.";
-            uses http-client-grouping;
-          }
-        }
-      }
-      case quic {
-        if-feature "quic-supported";
-        container quic {
-          description
-            "Container for the QUIC-based HTTP/3 protocols.";
-          container udp-client-parameters {
-            description
-              "UDP client parameters.";
-            uses udpc:udp-client-grouping;
-          }
-          container tls-client-parameters {
-            description
-              "TLS client parameters.";
-            uses tlsc:tls-client-grouping;
-          }
-          container http-client-parameters {
-            description
-              "HTTP client parameters.";
-            uses http-client-grouping;
-          }
-        }
-      }
+        "The URI the client uses.
+
+         As described by RFC 3986, URIs encode:
+           - scheme: e.g., https
+           - userinfo: e.g., user@pass
+           - host: e.g., example.com
+           - port: e.g., 443
+           - path: e.g., /foo/bar
+           - query: e.g., ?query
+           - fragment: e.g., #fragment
+        ";
+        reference
+          "RFC 3986  URI Generic Syntax";
     }
-  } // http-client-stack-grouping
+    leaf proxy-uri {
+      if-feature proxy-connect;
+      type inet:uri;
+      description
+        "Configures the proxy server the HTTP-client is to
+         connect through, per Section 9.3.6 of RFC 9110.
+
+         As described by RFC 3986, URIs encode:
+           - scheme: e.g., https
+           - userinfo: e.g., user@pass
+           - host: e.g., example.com
+           - port: e.g., 443
+           - path: e.g., /foo/bar
+           - query: e.g., ?query
+           - fragment: e.g., #fragment
+        ";
+        reference
+          "RFC 3986  URI Generic Syntax
+           RFC 9110: HTTP Semantics";
+    }
+    container tls-client-parameters {
+      if-feature "tls-supported";
+      description
+        "TLS client parameters.";
+      uses tlsc:tls-client-grouping;
+    }
+  } // grouping http-client-grouping
 
 }

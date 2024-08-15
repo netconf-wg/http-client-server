@@ -3,7 +3,7 @@
 
 <http-client xmlns="urn:ietf:params:xml:ns:yang:ietf-http-client">
   <uri>https://user:pass@remote-server-example.com/foo/bar?query#fragment</uri>
-  <proxy-uri>https://my-proxy-example.com</proxy-uri>
+  <protocol-versions>http-11 http-2 http-3</protocol-versions>
   <tls-client-parameters>
     <client-identity>
       <certificate>
@@ -22,4 +22,8 @@
       </ee-certs>
     </server-authentication>
   </tls-client-parameters>
+  <proxy-connect>
+    <uri>https://user:pass@proxy-example.com</uri>
+    <protocol-versions>http-2</protocol-versions>
+  </proxy-connect>
 </http-client>

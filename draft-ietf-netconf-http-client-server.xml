@@ -111,7 +111,7 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
       <t>This section defines a YANG 1.1 module called
         "ietf-http-client".  A high-level overview of the module is provided in
         <xref target="client-overview"/>. Examples illustrating the module's use
-        are provided in <xref target="client-examples">Examples</xref>. The YANG
+        are provided in <xref target="client-examples"/>. The YANG
         module itself is defined in <xref target="client-yang-module"/>.</t>
 
       <section title="Data Model Overview" anchor="client-overview">
@@ -127,6 +127,9 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
               <artwork><![CDATA[
 Features:
   +-- tls-supported
+  +-- http-11-supported
+  +-- http-2-supported
+  +-- http-3-supported
   +-- proxy-connect
 ]]></artwork>
             </figure>
@@ -158,7 +161,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
             <ul>
               <li>The "http-client-grouping" defines a mandatory "uri" leaf.</li>
               <li>Unlike other "client" groupings in the suite a "client-server"
-                drafts mentioned in <xref target="collective-effort"/>), this client
+                drafts mentioned in <xref target="collective-effort"/>, this client
                 grouping encodes configuration for most of the protocol stack. For instance,
                 the "scheme", "userinfo", "host" and "port" parts of the URI syntax
                 encode information that portains to transport layers.</li>
@@ -187,21 +190,32 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
       </section>
 
       <section title="Example Usage" anchor="client-examples">
-        <t>This section presents two examples showing the http-client-grouping
+        <t>This section presents three examples showing the http-client-grouping
           populated with some data.</t>
-        <t>The following example illustrates the case where the HTTP client
-          connects directly to an HTTP server.  Note, the information identifying
-          the remote server (e.g., its hostname) would be configured in the
-          "tcp-client-grouping" (not shown).</t>
+        <t>The first example illustrates the case where the HTTP client
+        is configured to connect directly to an HTTP server without TLS.</t>
         <t>
           <figure>
             <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/ex-http-client.xml)
+INSERT_TEXT_FROM_FILE(refs/ex-http-client-tcp.xml)
 ]]></artwork>
           </figure>
         </t>
-        <t>The following example illustrates the same client connecting through an
-          HTTP proxy.  This example is consistent with examples presented in 
+        <t>The second example illustrates the case where the HTTP client
+          is configured to connect directly to an HTTP server with TLS.</t>
+        <t>This example is consistent with examples presented in 
+          <relref section="2.2.1" target="I-D.ietf-netconf-trust-anchors"/> and
+          <relref section="2.2.1" target="I-D.ietf-netconf-keystore"/>.</t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-http-client-tls.xml)
+]]></artwork>
+          </figure>
+        </t>
+        <t>The following example illustrates the case where the HTTP client
+          is configured to connect through an HTTP proxy.</t>
+        <t>This example also is consistent with examples presented in 
           <relref section="2.2.1" target="I-D.ietf-netconf-trust-anchors"/> and
           <relref section="2.2.1" target="I-D.ietf-netconf-keystore"/>.</t>
         <t>
@@ -234,7 +248,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-client@YYYY-MM-DD.yang)
       <t>This section defines a YANG 1.1 module called
         "ietf-http-server".  A high-level overview of the module is provided in
         <xref target="server-overview"/>. Examples illustrating the module's use
-        are provided in <xref target="server-examples">Examples</xref>. The YANG
+        are provided in <xref target="server-examples"/>. The YANG
         module itself is defined in <xref target="server-yang-module"/>.</t>
 
       <section title="Data Model Overview" anchor="server-overview">
@@ -254,6 +268,7 @@ Features:
   +-- basic-auth
   +-- tcp-supported
   +-- tls-supported
+  +-- quic-supported
 ]]></artwork>
             </figure>
           </t>
@@ -395,11 +410,28 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           for information as to which nodes may be considered sensitive
           or vulnerable in network environments.</t>
 
-        <t>None of the readable data nodes defined in this YANG module,
-          i.e., excluding imported modules,
-          are considered sensitive or vulnerable in network environments.
-          The NACM "default-deny-all" extension has not been set for
-          any data nodes defined in this module.</t>
+        <t>Some of the readable data nodes defined in this YANG module,
+          i.e., excluding imported modules, may be considered sensitive
+          or vulnerable in some network environments. It is thus important
+          to control read access to these data nodes. The following data
+          nodes have particular sensitivity/vulnerability:
+          <list style="symbols">
+            <t>The "uri" node:
+              <ul empty="true">
+                <li>The "uri" node may encode a cleartext password (basic
+                  or digest authentication).  For this reason, the NACM
+                  extension "default-deny-all" was applied to it.</li>
+              </ul>
+            </t>
+            <t>The "proxy-connect/uri" node:
+              <ul empty="true">
+                <li>The "proxy-connect/uri" node may encode a cleartext password (basic
+                  or digest authentication).  For this reason, the NACM
+                  extension "default-deny-all" was applied to it.</li>
+              </ul>
+            </t>
+          </list>
+        </t>
 
         <t>The follwing writable data nodes defined in this YANG module, i.e.,
           excluding imported modules, are considered sensitive or vulnerable

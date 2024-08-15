@@ -230,10 +230,7 @@ module ietf-http-server {
     choice transport {
       mandatory true;
       description
-        "Choice amongst various transports type.  TCP, with and
-         without TLS are defined here, with 'feature' statements
-         so that they may be disabled.  Other transports MAY be
-         augmented in as 'case' statements by future efforts.";
+        "Choice amongst various transports type.";
       case tcp {
         if-feature "tcp-supported";
         container tcp {
@@ -247,7 +244,7 @@ module ietf-http-server {
               refine "local-bind/local-port" {
                 default "80";
                 description
-                  "The HTTP client will attempt to connect
+                  "The HTTP server will attempt to connect
                    to the IANA-assigned well-known port for
                    'http' (80) if no value is specified.";
               }
@@ -274,7 +271,7 @@ module ietf-http-server {
               refine "local-bind/local-port" {
                 default "443";
                 description
-                  "The HTTP client will attempt to connect
+                  "The HTTP server will attempt to connect
                    to the IANA-assigned well-known port for
                    'https' (443) if no value is specified.";
               }

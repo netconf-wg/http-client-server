@@ -108,10 +108,10 @@ module ietf-http-client {
 
   // Groupings
 
-  grouping _common-grouping {
+  grouping http-client-common-grouping {
     description
-      "A private grouping for the 'http-client-grouping'
-       and its decendednt node 'proxy-connect' to use.";
+      "A grouping for the 'http-client-grouping' and
+       its descendant node 'proxy-connect' to use.";
     leaf uri {
       nacm:default-deny-all;
       type inet:uri;
@@ -180,14 +180,14 @@ module ietf-http-client {
   grouping http-client-grouping {
     description
       "A reusable grouping for configuring an HTTP client.";
-    uses _common-grouping;
+    uses http-client-common-grouping;
     container proxy-connect {
       if-feature proxy-connect;
       presence
         "Indicates that the HTTP-client connects through a proxy.
          This statement is present so the mandatory descendant
          nodes do not imply that this node must be configured.";
-      uses _common-grouping;
+      uses http-client-common-grouping;
       description
         "Configures the proxy server the HTTP-client is to
          connect through, per Section 9.3.6 of RFC 9110.";

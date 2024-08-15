@@ -29,9 +29,10 @@ extract_grouping() {
   extract_grouping_with_params "$1" "$2" "--tree-no-expand-uses" "tree-$2.no-expand.txt"
 }
 
-extract_grouping ietf-http-client http-client-identity-grouping
+#extract_grouping ietf-http-client http-client-identity-grouping
+extract_grouping ietf-http-client http-client-common-grouping
 extract_grouping ietf-http-client http-client-grouping
-extract_grouping ietf-http-client http-client-stack-grouping
+#extract_grouping ietf-http-client http-client-stack-grouping
 
 extract_grouping ietf-http-server http-server-grouping
 extract_grouping ietf-http-server http-server-stack-grouping

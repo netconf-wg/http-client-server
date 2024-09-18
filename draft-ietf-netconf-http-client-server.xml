@@ -38,7 +38,7 @@
         a minimal grouping for configuring an HTTP server.  It is
         intended that these groupings will be used to help define the
         configuration for simple HTTP-based protocols (not for complete
-        web servers or browsers).  Support is provided for HTTP/1.1, HTTP/2, and HTTP/3.</t>
+        web servers or browsers).</t>
     </abstract>
     <note title="Editorial Note (To be removed by RFC Editor)">
       <t>This draft contains placeholder values that need to be replaced
@@ -89,8 +89,7 @@
         grouping for configuring an HTTP client, and the second defines
         a minimal grouping for configuring an HTTP server.  It is
         intended that these groupings will be used to help define the
-        configuration for simple HTTP-based protocols.  Support is
-        provided for HTTP/1.1, HTTP/2, and HTTP/3.</t>
+        configuration for simple HTTP-based protocols.</t>
 
 INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
 

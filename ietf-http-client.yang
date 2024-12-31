@@ -93,7 +93,7 @@ module ietf-http-client {
       "Indicates that the server supports configuring
        clients to use the HTTP/3 protocol.";
     reference
-      "RFC 9114 - HTTP/3";
+      "RFC 9114: HTTP/3";
   }
 
   feature proxy-connect {

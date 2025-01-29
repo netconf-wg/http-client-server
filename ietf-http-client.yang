@@ -33,7 +33,7 @@ module ietf-http-client {
     "This module defines reusable groupings for HTTP clients that
      can be used as a basis for specific HTTP client instances.
 
-     Copyright (c) 2024 IETF Trust and the persons identified
+     Copyright (c) 2025 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
@@ -71,7 +71,7 @@ module ietf-http-client {
       "RFC 9110: HTTP Semantics";
   }
 
-  feature "http-11-supported" {
+  feature "http1-supported" {
     description
       "Indicates that the server supports configuring
        clients to use the HTTP/1.1 protocol.";
@@ -79,7 +79,7 @@ module ietf-http-client {
       "RFC 9112: HTTP/1.1";
   }
 
-  feature "http-2-supported" {
+  feature "http2-supported" {
     description
       "Indicates that the server supports configuring
        clients to use the HTTP/2 protocol.";
@@ -87,7 +87,7 @@ module ietf-http-client {
       "RFC 9113: HTTP/2";
   }
 
-  feature "http-3-supported" {
+  feature "http3-supported" {
     if-feature "tls-supported";
     description
       "Indicates that the server supports configuring
@@ -112,55 +112,98 @@ module ietf-http-client {
     description
       "A grouping for the 'http-client-grouping' and
        its descendant node 'proxy-connect' to use.";
-    leaf uri {
-      nacm:default-deny-all;
-      type inet:uri;
-      mandatory true;
+    container uri {
       description
-        "The URI the client uses.
-
-         As described by RFC 3986, URIs encode:
-           - scheme: e.g., https
-           - userinfo: e.g., user@pass
-           - host: e.g., example.com
-           - port: e.g., 443
-           - path: e.g., /foo/bar
-           - query: e.g., ?query
-           - fragment: e.g., #fragment
-        ";
-        reference
-          "RFC 3986  URI Generic Syntax";
-    }
-    leaf protocol-versions {
-      type union {
-        type enumeration {
-          enum any {
-            description
-              "Indicates the client is willing to use any version";
-          }
+        "The URI described in Section 3 of RFC 3986";
+      reference
+        "RFC 3986  URI Generic Syntax";
+      leaf scheme {
+        type string;
+        mandatory true;
+        description
+          "The 'Scheme' as described in Section 3.1 of RFC 3986.";
+      }
+      container authority {
+        presence
+          "Indicates that 'authority' has been configured.";
+        description
+          "The 'Authority' as described in Section 3.2 of RFC 3986.";
+        leaf userinfo {
+          nacm:default-deny-all;
+          type string;
+          description
+            "The 'User Information' as described in Section 3.2.1
+             of RFC 3986.";
         }
-        type bits {
-          bit "http-11" {
-            if-feature "http-11-supported";
-            description
-              "Indicates the client is willing to use HTTP/1.1.";
-          }
-          bit "http-2" {
-            if-feature "http-2-supported";
-            description
-              "Indicates the client is willing to use HTTP/2.";
-          }
-          bit "http-3" {
-            if-feature "http-3-supported";
-            description
-              "Indicates the client is willing to use HTTP/3.";
-          }
+        leaf host {
+          type inet:host;
+          mandatory true;
+          description
+            "The 'Host' as described in Section 3.2.2 of RFC 3986.";
+        }
+        leaf port {
+          type uint16;
+          description
+            "The 'Port' as described in Section 3.2.3 of RFC 3986.";
         }
       }
-      default "any";
+      leaf path {
+        type string;
+        description
+          "The 'Path' as described in Section 3.3 of RFC 3986.";
+      }
+      leaf query {
+        type string;
+        description
+          "The 'Query' as described in Section 3.4 of RFC 3986.";
+      }
+      leaf fragment {
+        type string;
+        description
+          "The 'Fragment' as described in Section 3.5 of RFC 3986.";
+      }
+    }
+
+    container protocol-versions {
+      presence
+        "If unconfigured, then all versions are supported.";
       description
         "HTTP protocol versions the client supports.";
+      typedef min-max-typedef {
+        type enumeration {
+          enum "HTTP/1" {
+            if-feature "http1-supported";
+            description
+              "Indicates that 'HTTP/1' has been configured.";
+          }
+          enum "HTTP/2" {
+            if-feature "http2-supported";
+            description
+              "Indicates that 'HTTP/2' has been configured.";
+          }
+          enum "HTTP/3" {
+            if-feature "http3-supported";
+            description
+              "Indicates that 'HTTP/3' has been configured.";
+          }
+        }
+        description
+          "A typedef used by the 'min' and 'max' leafs.";
+      }
+      leaf min {
+        type min-max-typedef;
+        mandatory true;
+        description
+          "The minimum protocol version supported.";
+      }
+      leaf max {
+        type min-max-typedef;
+        mandatory true;
+        description
+          "The mxnimum protocol version supported.";
+      }
     }
+
     container tls-client-parameters {
       if-feature "tls-supported";
       description
@@ -194,6 +237,6 @@ module ietf-http-client {
       reference
         "RFC 9110: HTTP Semantics";
     }
-  } // grouping http-client-grouping
+  }
 
 }

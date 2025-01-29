@@ -13,6 +13,10 @@
     <query>query</query>
     <fragment>fragment</fragment>
   </uri>
+  <protocol-versions>
+    <min>HTTP/1</min>
+    <max>HTTP/3</max>
+  </protocol-versions>
   <tls-client-parameters>
     <client-identity>
       <certificate>
@@ -31,17 +35,4 @@
       </ee-certs>
     </server-authentication>
   </tls-client-parameters>
-  <proxy-connect>
-    <uri>
-      <scheme>https</scheme>
-      <authority>
-        <userinfo>user:pass</userinfo>
-        <host>proxy-example.com</host>
-      </authority>
-    </uri>
-    <protocol-versions>
-      <min>HTTP/2</min>
-      <max>HTTP/2</max>
-    </protocol-versions>
-  </proxy-connect>
 </http-client>

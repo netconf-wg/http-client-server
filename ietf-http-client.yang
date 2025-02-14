@@ -30,8 +30,8 @@ module ietf-http-client {
      Author:   Kent Watsen <mailto:kent+ietf@watsen.net>";
 
   description
-    "This module defines reusable groupings for HTTP clients that
-     can be used as a basis for specific HTTP client instances.
+    "This module defines groupings for HTTP clients that can
+     be used as a basis for specific HTTP client instances.
 
      Copyright (c) 2025 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
@@ -71,7 +71,7 @@ module ietf-http-client {
       "RFC 9110: HTTP Semantics";
   }
 
-  feature "http1-supported" {
+  feature http1-supported {
     description
       "Indicates that the server supports configuring
        clients to use the HTTP/1.1 protocol.";
@@ -79,7 +79,7 @@ module ietf-http-client {
       "RFC 9112: HTTP/1.1";
   }
 
-  feature "http2-supported" {
+  feature http2-supported {
     description
       "Indicates that the server supports configuring
        clients to use the HTTP/2 protocol.";
@@ -87,8 +87,8 @@ module ietf-http-client {
       "RFC 9113: HTTP/2";
   }
 
-  feature "http3-supported" {
-    if-feature "tls-supported";
+  feature http3-supported {
+    if-feature tls-supported;
     description
       "Indicates that the server supports configuring
        clients to use the HTTP/3 protocol.";
@@ -105,13 +105,16 @@ module ietf-http-client {
       "RFC 9110: HTTP Semantics";
   }
 
+  // Grouping
 
-  // Groupings
-
-  grouping http-client-common-grouping {
+  grouping http-client-grouping {
     description
-      "A grouping for the 'http-client-grouping' and
-       its descendant node 'proxy-connect' to use.";
+      "A grouping for HTTP client level configuration. This grouping
+       is not expected to be used with groupings for lower protocol
+       layer (e.g., the 'tcp-client-grouping' found in RFC 9643), as
+       equivalent information is encoded into the URI.";
+    reference
+      "RFC 9643: YANG Groupings for TCP Clients and TCP Servers";
     container uri {
       description
         "The URI described in Section 3 of RFC 3986";
@@ -172,17 +175,17 @@ module ietf-http-client {
       typedef min-max-typedef {
         type enumeration {
           enum "HTTP/1" {
-            if-feature "http1-supported";
+            if-feature http1-supported;
             description
               "Indicates that 'HTTP/1' has been configured.";
           }
           enum "HTTP/2" {
-            if-feature "http2-supported";
+            if-feature http2-supported;
             description
               "Indicates that 'HTTP/2' has been configured.";
           }
           enum "HTTP/3" {
-            if-feature "http3-supported";
+            if-feature http3-supported;
             description
               "Indicates that 'HTTP/3' has been configured.";
           }
@@ -205,9 +208,10 @@ module ietf-http-client {
     }
 
     container tls-client-parameters {
-      if-feature "tls-supported";
+      if-feature tls-supported;
       description
-        "TLS client parameters.";
+        "TLS client parameters, in case the URI scheme indicates
+         the need for TLS.";
       uses tlsc:tls-client-grouping {
         refine server-authentication {
           presence
@@ -218,25 +222,53 @@ module ietf-http-client {
         }
       }
     }
-  }
 
-  grouping http-client-grouping {
-    description
-      "A reusable grouping for configuring an HTTP client.";
-    uses http-client-common-grouping;
     container proxy-connect {
       if-feature proxy-connect;
       presence
-        "Indicates that the HTTP-client connects through a proxy.
-         This statement is present so the mandatory descendant
-         nodes do not imply that this node must be configured.";
-      uses http-client-common-grouping;
+        "Indicates that the HTTP-client connects through the
+         configured proxy.";
       description
-        "Configures the proxy server the HTTP-client is to
-         connect through, per Section 9.3.6 of RFC 9110.";
-      reference
-        "RFC 9110: HTTP Semantics";
+        "Configures how to connect to the proxy.";
+      leaf protocol {
+        type enumeration {
+          enum CONNECT {
+            description
+              "Use the 'CONNECT' method described in Section 9.3.6
+               of RFC 9110.";
+            reference
+              "RFC 9110: HTTP Semantics";
+          }
+          enum CONNECT-UDP {
+            description
+              "Use the 'connect-udp' upgrade token described in
+               Section 3 of RFC 9298.";
+            reference
+              "RFC 9298: Proxying UDP in HTTP";
+          }
+        }
+        mandatory true;
+        description
+          "The protocol to use when connecting to the proxy.";
+      }
+      leaf host {
+        type inet:host;
+        mandatory true;
+        description
+          "The 'Host' subcomponent, as described in Section 3.2.2 of
+           RFC 3986, of the proxy.";
+        reference
+          "RFC 3986  URI Generic Syntax";
+      }
+      leaf port {
+        type uint16;
+        mandatory true;
+        description
+          "The 'Port' subcomponent, as described in Section 3.2.3 of
+           RFC 3986, of the proxy.";
+        reference
+          "RFC 3986  URI Generic Syntax";
+      }
     }
   }
-
 }

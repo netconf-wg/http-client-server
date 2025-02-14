@@ -52,6 +52,7 @@
           <t><spanx style="verb">DDDD</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-tcp-client-server</t>
           <t><spanx style="verb">FFFF</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-tls-client-server</t>
           <t><spanx style="verb">GGGG</spanx> --&gt; the assigned RFC value for this draft</t>
+          <t><spanx style="verb">JJJJ</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-udp-client-server</t>
         </list>
       </t>
       <t>Artwork in this document contains placeholder values for the date of
@@ -140,47 +141,12 @@ Features:
         </section>
 
         <section title="Groupings" toc="exclude">
-          <t>The "ietf-http-client" module defines the following "grouping" statements:</t>
+          <t>The "ietf-http-client" module defines the following "grouping" statement:</t>
           <ul spacing="compact">
-            <li>http-client-common-grouping</li>
             <li>http-client-grouping</li>
           </ul>
-          <t>These groupings are presented in the following subsections.</t>
+          <t>This grouping is presented in the following subsection.</t>
 
-          <section title="The &quot;http-client-common-grouping&quot; Grouping" anchor="http-client-common-grouping">
-            <t>The following tree diagram <xref target="RFC8340"/> illustrates the
-              "http-client-common-grouping" grouping:</t>
-            <t>
-              <figure>
-               <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/tree-http-client-common-grouping.no-expand.txt)
-]]></artwork>
-              </figure>
-            </t>
-            <t>Comments:</t>
-            <ul>
-              <li>The "http-client-common-grouping" grouping defines a mandatory "uri" leaf.
-                Unlike other "client" groupings in the suite a "client-server"
-                drafts mentioned in <xref target="collective-effort"/>, this client
-                grouping encodes configuration for most of the protocol stack. For instance,
-                the "scheme", "userinfo", "host" and "port" parts of the URI syntax
-                  encode information that portains to transport layers.</li>
-              <li>The "http-client-common-grouping" grouping defines an optional
-                protocol-versions leaf, enabling a client to specify which HTTP
-                protocol versions it is willing to use.  When unspecified, the
-                default is for the HTTP client can use any version.</li>
-              <li>The "http-client-common-grouping" defines an optional "tls-client-parameters"
-                container, enabling trust anchors and client certificates to be
-                configured, for server that enable the "tls-supported" feature.
-                When unspecified, TLS-based connections are not possible.</li>
-              <li>For the referenced grouping statement(s):
-                <ul spacing="compact">
-                  <li>The "tls-client-grouping" grouping is discussed in
-                    <relref section="3.1.2.1" target="I-D.ietf-netconf-tls-client-server"/>.</li>
-                </ul>
-              </li>
-            </ul>
-          </section>
           <section title="The &quot;http-client-grouping&quot; Grouping" anchor="http-client-grouping">
             <t>The following tree diagram <xref target="RFC8340"/> illustrates the
               "http-client-grouping" grouping:</t>
@@ -193,15 +159,24 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
             </t>
             <t>Comments:</t>
             <ul>
-              <li>The "http-client-grouping" defines an optional "proxy-connect" container,
-                enabling connections through proxies, for servers that enable the
-                "proxy-connect" feature.</li>
-              <li>For the referenced grouping statement(s):
-                <ul spacing="compact">
-                  <li>The "http-client-common-grouping" grouping is discussed in
-                    <xref target="http-client-common-grouping"/> in this document.</li>
-                </ul>
-              </li>
+              <li>The 'uri' node is mandatory due to the 'scheme' and 'host'
+                descendant nodes being mandatory. The 'uri' node is the only
+                mandatory part of the "http-client-grouping" grouping.</li>
+              <li>The optional 'protocol-versions' node specifies a min-max
+                range of protocol versions to use.</li>
+              <li>The optional 'tls-client-parameters' node specifies TLS-level
+                client identity and server authentication credentials to use,
+                if needed per the configured URI.  When unspecified, TLS-based
+                connections are not possible.  The "tls-client-grouping"
+                grouping is discussed in <relref section="3.1.2.1"
+                target="I-D.ietf-netconf-tls-client-server"/>.</li>
+              <li>The optional 'proxy-connect' node specifies how to proxy the
+                connection through a proxy server.</li>
+              <li>Unlike other "client" groupings in the suite a "client-server"
+                drafts mentioned in <xref target="collective-effort"/>, this client
+                grouping also encodes configuration for the lower protocol stack
+                layers.  Specifically, the "scheme" and "authority" parts of the
+                URI encode information that portains to transport layers.</li>
             </ul>
           </section>
         </section>
@@ -260,7 +235,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-client-proxy.xml)
           <figure>
             <preamble>&lt;CODE BEGINS&gt; file "ietf-http-client@YYYY-MM-DD.yang"</preamble>
             <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(ietf-http-client@YYYY-MM-DD.yang)
+INSERT_TEXT_FROM_FILE(refs/ietf-http-client@YYYY-MM-DD.yang)
 ]]></artwork>
             <postamble>&lt;CODE ENDS&gt;</postamble>
           </figure>
@@ -307,7 +282,7 @@ Features:
           <t>The "ietf-http-server" module defines the following "grouping" statements:</t>
           <ul spacing="compact">
             <li>http-server-grouping</li>
-            <li>http-server-stack-grouping</li>
+            <li>http-server-listen-stack-grouping</li>
           </ul>
           <t>Each of these groupings are presented in the following subsections.</t>
 
@@ -326,7 +301,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-server-grouping.no-expand.txt)
               <li>The "http-server-grouping" defines the configuration for just the
                 "HTTP" part of a protocol stack.  It does not, for instance,
                 define any configuration for the "TCP" or "TLS" protocol layers
-                (for that, see <xref target="http-server-stack-grouping"/>).</li>
+                (for that, see <xref target="http-server-listen-stack-grouping"/>).</li>
               <li>The "server-name" node defines the HTTP server's name, as
                 presented to HTTP clients.</li>
               <li>The "client-authentication" node, which must by enabled by
@@ -337,19 +312,19 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-server-grouping.no-expand.txt)
             </ul>
           </section>
 
-          <section title="The &quot;http-server-stack-grouping&quot; Grouping" anchor="http-server-stack-grouping">
+          <section title="The &quot;http-server-listen-stack-grouping&quot; Grouping" anchor="http-server-listen-stack-grouping">
             <t>The following tree diagram <xref target="RFC8340"/> illustrates the
-              "http-server-stack-grouping" grouping:</t>
+              "http-server-listen-stack-grouping" grouping:</t>
             <t>
               <figure>
                <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/tree-http-server-stack-grouping.no-expand.txt)
+INSERT_TEXT_FROM_FILE(refs/tree-http-server-listen-stack-grouping.no-expand.txt)
 ]]></artwork>
               </figure>
             </t>
             <t>Comments:</t>
             <ul>
-              <li>The "http-server-stack-grouping" is a convenience grouping for consuming
+              <li>The "http-server-listen-stack-grouping" is a convenience grouping for consuming
                 modules.  It defines protocol stacks for HTTP/1.1, HTTP/2, and HTTP/3, with each
                 option enabled by a "feature" statement for application control.  Other
                 protocols may be added by future work using the YANG "augment" statement.</li>
@@ -397,7 +372,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-http-server.xml)
           <figure>
             <preamble>&lt;CODE BEGINS&gt; file "ietf-http-server@YYYY-MM-DD.yang"</preamble>
             <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
+INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
 ]]></artwork>
             <postamble>&lt;CODE ENDS&gt;</postamble>
           </figure>
@@ -416,12 +391,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <section title="Considerations for the &quot;ietf-http-client&quot; YANG Module">
         <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
 
-        <t>The "ietf-http-client" YANG module defines "grouping" statements
-          that are designed to be accessed via YANG based management
+        <t>The "ietf-http-client" YANG module defines data nodes
+          that are designed to be accessed via YANG-based management
           protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
-          <xref target="RFC8040"/>.  Both of these protocols have
-          mandatory-to-implement secure transport layers (e.g., SSH, TLS)
-          with mutual authentication.</t>
+          <xref target="RFC8040"/>.  These protocols have mandatory-to-implement
+          secure transport layers (e.g., SSH <xref target="RFC4252"/>, 
+          TLS <xref target="RFC8446"/>, and QUIC <xref target="RFC9000"/>) and
+          mandatory-to-implement mutual authentication.</t>
 
         <t>The Network Access Control Model (NACM) <xref target="RFC8341"/>
           provides the means to restrict access for particular users to a
@@ -478,12 +454,13 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
       <section title="Considerations for the &quot;ietf-http-server&quot; YANG Module">
         <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
 
-        <t>The "ietf-http-server" YANG module defines "grouping" statements
-          that are designed to be accessed via YANG based management
+        <t>The "ietf-http-server" YANG module defines data nodes
+          that are designed to be accessed via YANG-based management
           protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
-          <xref target="RFC8040"/>.  Both of these protocols have
-          mandatory-to-implement secure transport layers (e.g., SSH, TLS)
-          with mutual authentication.</t>
+          <xref target="RFC8040"/>.  These protocols have mandatory-to-implement
+          secure transport layers (e.g., SSH <xref target="RFC4252"/>, 
+          TLS <xref target="RFC8446"/>, and QUIC <xref target="RFC9000"/>) and
+          mandatory-to-implement mutual authentication.</t>
 
         <t>The Network Access Control Model (NACM) <xref target="RFC8341"/>
           provides the means to restrict access for particular users to a
@@ -591,11 +568,14 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
     <references title="Informative References">
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4252.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8040.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8342.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8407.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-trust-anchors.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-keystore.xml"/>
       <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-ssh-client-server.xml"/>
@@ -640,7 +620,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>Added a parent "container" to "client-identity-grouping" so that it could be
               better used by the proxy model.</t>
             <t>Added a "choice" to the proxy model enabling selection of proxy types.</t>
-            <t>Added 'http-client-stack-grouping' and 'http-server-stack-grouping' convenience groupings.</t>
+            <t>Added 'http-client-stack-grouping' and 'http-server-listen-stack-grouping' convenience groupings.</t>
             <t>Expanded "Data Model Overview section(s) [remove "wall" of tree diagrams].</t>
             <t>Updated the Security Considerations section.</t>
           </list>
@@ -758,7 +738,7 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
             <t>s/defines/presents/ in a few places.</t>
             <t>Add refs to where the 'operational' and 'system' datastores are defined.</t>
             <t>Renamed Security Considerations section s/Template for/Considerations for/.</t>
-            <t>Updated "http-client-stack-grouping" and "http-server-stack-grouping" for HTTP/3.</t>
+            <t>Updated "http-client-stack-grouping" and "http-server-listen-stack-grouping" for HTTP/3.</t>
           </list>
         </t> 
       </section>
@@ -776,21 +756,46 @@ INSERT_TEXT_FROM_FILE(ietf-http-server@YYYY-MM-DD.yang)
           </list>
         </t> 
       </section>
+      <section title="23 to 24">
+        <t>   
+          <list style="symbols">
+            <t>Replaced 'uri' as string with a container with components.</t>
+            <t>Added 'if-feature full-uri-supported' statement to the 'path', 'query' and 'fragment' components</t>
+            <t>Replaced 'protocol-versions' as 'bits' with a min/max range</t>
+            <t>Fixed 'proxy-connect' to reflect RFC 9110 (not legacy the HTTP/S Proxy mechanism)</t>
+            <t>Added support for CONNECT-UDP per RFC 9298</t>
+            <t>Eliminated the 'http-client-common-grouping' grouping (not needed after updating the proxy solution)</t>
+            <t>Renamed 'http-server-stack-grouping' to 'http-server-listen-stack-grouping', to make way for a possible future 'http-server-callhome-stack-grouping'</t>
+          </list>
+        </t> 
+      </section>
+      <section title="24 to 25">
+        <t>   
+          <list style="symbols">
+            <t>Updated 2nd paragraph in Security Considerations section to match RFC Editor's version for other drafts in the suite of client-server drafts.</t>
+            <t>Removed the 'full-uri-supported' feature added in -24, after discussing some with Mahesh.</t>
+          </list>
+        </t> 
+      </section>
     </section>
 
     <section title="Acknowledgements" numbered="no">
       <t>The authors would like to thank the following for lively discussions
         on list and in the halls (ordered by first name):
           Ben Schwartz,
+          Darrel Miller,
           Éric Vyncke,
+          Francesca Palombini,
           Mark Nottingham,
           Mahesh Jethanandani,
           Murray Kucherawy,
           Orie Steele,
           Rob Wilton,
+          Robert Varga,
           Roman Danyliw,
           Shivan Sahib,
-          and Willy Tarreau.
+          Willy Tarreau,
+          and Zaheduzzaman Sarker.
       </t>
     </section>
 

@@ -20,55 +20,58 @@ run_unix_cmd() {
 }
 
 printf "Testing ietf-http-client.yang (pyang)..."
-command="pyang -Werror --ietf --max-line-length=69 -p ../ ../ietf-http-client\@*.yang"
+command="pyang -Werror --ietf --max-line-length=69 ietf-http-client\@*.yang"
 run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 
 printf "Testing ietf-http-client.yang (yanglint)..."
-command="yanglint -p ../ ../ietf-http-client\@*.yang"
+command="yanglint ietf-http-client\@*.yang"
 run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 
 printf "Testing ietf-http-server.yang (pyang)..."
-command="pyang -Werror --ietf --max-line-length=69 -p ../ ../ietf-http-server\@*.yang"
+command="pyang -Werror --ietf --max-line-length=69 ietf-http-server\@*.yang"
 run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 
 printf "Testing ietf-http-server.yang (yanglint)..."
-command="yanglint -p ../ ../ietf-http-server\@*.yang"
+command="yanglint ietf-http-server\@*.yang"
 run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 
 printf "Testing ex-http-client-tcp.xml..."
-name=`ls -1 ../ietf-http-client\@*.yang | sed 's/\.\.\///'`
-sed 's/^}/container http-client { uses http-client-grouping; }}/' ../ietf-http-client\@*.yang > $name
-command="yanglint -p ../ $name ex-http-client-tcp.xml"
+name=`ls -1 ietf-http-client\@*.yang`
+cp $name $name.sav
+sed 's/^}/container http-client { uses http-client-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
+command="yanglint $name ex-http-client-tcp.xml"
 run_unix_cmd $LINENO "$command" 0
+mv $name.sav $name
 printf "okay.\n"
-rm $name
 
 printf "Testing ex-http-client-tls.xml..."
-name=`ls -1 ../ietf-http-client\@*.yang | sed 's/\.\.\///'`
-sed 's/^}/container http-client { uses http-client-grouping; }}/' ../ietf-http-client\@*.yang > $name
-#command="yanglint -p ../ $name ex-http-client.xml"
-command="yanglint -m ../ietf-crypto-types@*.yang ../ietf-truststore@*.yang ../ietf-keystore@*.yang ../ietf-tls-common@*.yang ../ietf-tls-client@*.yang $name ex-http-client-tls.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
+name=`ls -1 ietf-http-client\@*.yang`
+cp $name $name.sav
+sed 's/^}/container http-client { uses http-client-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
+command="yanglint -m ietf-crypto-types@*.yang ietf-truststore@*.yang ietf-keystore@*.yang ietf-tls-common@*.yang ietf-tls-client@*.yang $name ex-http-client-tls.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
 run_unix_cmd $LINENO "$command" 0
+mv $name.sav $name
 printf "okay.\n"
-rm $name
 
 printf "Testing ex-http-client-proxy.xml..."
-name=`ls -1 ../ietf-http-client\@*.yang | sed 's/\.\.\///'`
-sed 's/^}/container http-client { uses http-client-grouping; }}/' ../ietf-http-client\@*.yang > $name
-command="yanglint -m ../ietf-crypto-types@*.yang ../ietf-truststore@*.yang ../ietf-keystore@*.yang ../ietf-tls-common@*.yang ../ietf-tls-client@*.yang $name ex-http-client-proxy.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
+name=`ls -1 ietf-http-client\@*.yang`
+cp $name $name.sav
+sed 's/^}/container http-client { uses http-client-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
+command="yanglint -m ietf-crypto-types@*.yang ietf-truststore@*.yang ietf-keystore@*.yang ietf-tls-common@*.yang ietf-tls-client@*.yang $name ex-http-client-proxy.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
 run_unix_cmd $LINENO "$command" 0
+mv $name.sav $name
 printf "okay.\n"
-rm $name
 
 printf "Testing ex-http-server.xml..."
-name=`ls -1 ../ietf-http-server\@*.yang | sed 's/\.\.\///'`
-sed 's/^}/container http-server { uses http-server-grouping; }}/' ../ietf-http-server\@*.yang > $name
-command="yanglint -p ../ $name ex-http-server.xml"
+name=`ls -1 ietf-http-server\@*.yang`
+cp $name $name.sav
+sed 's/^}/container http-server { uses http-server-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
+command="yanglint $name ex-http-server.xml"
 run_unix_cmd $LINENO "$command" 0
+mv $name.sav $name
 printf "okay.\n"
-rm $name
 

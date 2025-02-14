@@ -11,7 +11,7 @@ extract_grouping_with_params() {
   # $2 name of grouping
   # $3 addition CLI params
   # $4 output filename
-  pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings $3 ../$1@*.yang > $1-groupings-tree.txt
+  pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings $3 $1@*.yang > $1-groupings-tree.txt
   cat $1-groupings-tree.txt | sed -n "/^  grouping $2/,/^  grouping/p" > tmp
   c=$(grep -c "^  grouping" tmp)
   if [ "$c" -ne "1" ]; then
@@ -29,11 +29,8 @@ extract_grouping() {
   extract_grouping_with_params "$1" "$2" "--tree-no-expand-uses" "tree-$2.no-expand.txt"
 }
 
-#extract_grouping ietf-http-client http-client-identity-grouping
-extract_grouping ietf-http-client http-client-common-grouping
 extract_grouping ietf-http-client http-client-grouping
-#extract_grouping ietf-http-client http-client-stack-grouping
 
 extract_grouping ietf-http-server http-server-grouping
-extract_grouping ietf-http-server http-server-stack-grouping
+extract_grouping ietf-http-server http-server-listen-stack-grouping
 

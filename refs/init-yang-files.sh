@@ -33,15 +33,13 @@ download_modules_from_iana() {
         ietf-tls-common@2024-10-10
         ietf-tls-client@2024-10-10
         ietf-tls-server@2024-10-10
-        iana-tls-cipher-suite-algs@2024-10-10
+        iana-tls-cipher-suite-algs@2024-10-16
     )
     for module in "${modules_with_revisions[@]}"; do
         resilient_curl https://www.iana.org/assignments/yang-parameters/$module.yang
     done
 
     # modules without revisions
-    #resilient_curl https://www.iana.org/assignments/yang-parameters/iana-tls-cipher-suite-algs.yang
-    mv iana-tls-cipher-suite-algs@2024-10-10.yang iana-tls-cipher-suite-algs@2024-10-16.yang
 }
 
 

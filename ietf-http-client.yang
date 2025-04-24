@@ -203,7 +203,7 @@ module ietf-http-client {
         type min-max-typedef;
         mandatory true;
         description
-          "The mxnimum protocol version supported.";
+          "The maximum protocol version supported.";
       }
     }
 

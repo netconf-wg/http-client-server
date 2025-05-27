@@ -224,6 +224,7 @@ module ietf-http-server {
     } // container client-authentication
   } // grouping http-server-grouping
 
+
   grouping http-server-listen-stack-grouping {
     description
       "A grouping that defines a single instance of an HTTP-based
@@ -232,9 +233,9 @@ module ietf-http-server {
       mandatory true;
       description
         "Choice amongst various transports type.";
-      case tcp {
+      case http-over-tcp {
         if-feature "tcp-supported";
-        container tcp {
+        container http-over-tcp {
           description
             "Container for TCP-based HTTP/1 or HTTP/2 protocols.";
           container tcp-server-parameters {
@@ -259,9 +260,9 @@ module ietf-http-server {
           }
         }
       }
-      case tls {
+      case http-over-tls {
         if-feature "tls-supported";
-        container tls {
+        container http-over-tls {
           description
             "Container for TLS-based HTTP/1 or HTTP/2 protocols.";
           container tcp-server-parameters {
@@ -292,9 +293,9 @@ module ietf-http-server {
           }
         }
       }
-      case quic {
+      case http-over-quic {
         if-feature "quic-supported";
-        container quic {
+        container http-over-quic {
           description
             "Container for the QUIC-based HTTP/3 protocol.";
           container udp-server-parameters {

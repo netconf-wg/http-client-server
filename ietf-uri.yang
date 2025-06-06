@@ -95,7 +95,7 @@ module ietf-uri {
           "The 'Host' as described in Section 3.2.2 of RFC 3986.";
       }
       leaf port {
-        type uint16;
+        type inet:port-number;
         description
           "The 'Port' as described in Section 3.2.3 of RFC 3986.";
       }

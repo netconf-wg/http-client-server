@@ -19,6 +19,16 @@ run_unix_cmd() {
   fi
 }
 
+printf "Testing ietf-uri.yang (pyang)..."
+command="pyang -Werror --ietf --max-line-length=69 ietf-uri\@*.yang"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+
+printf "Testing ietf-uri.yang (yanglint)..."
+command="yanglint ietf-uri\@*.yang"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+
 printf "Testing ietf-http-client.yang (pyang)..."
 command="pyang -Werror --ietf --max-line-length=69 ietf-http-client\@*.yang"
 run_unix_cmd $LINENO "$command" 0

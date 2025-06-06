@@ -33,12 +33,13 @@
     <area>Operations</area>
     <workgroup>NETCONF Working Group</workgroup>
     <abstract>
-      <t>This document presents two YANG modules: the first defines a minimal
+      <t>This document primarily presents two YANG modules: the first defines a minimal
         grouping for configuring an HTTP client, and the second defines
         a minimal grouping for configuring an HTTP server.  It is
         intended that these groupings will be used to help define the
         configuration for simple HTTP-based protocols (not for complete
-        web servers or browsers).</t>
+        web servers or browsers).  This document additionally presents a
+        third YANG module, to define a grouping for URIs.</t>
     </abstract>
     <note title="Editorial Note (To be removed by RFC Editor)">
       <t>This draft contains placeholder values that need to be replaced
@@ -90,11 +91,13 @@
 
   <middle>
     <section title="Introduction">
-      <t>This document presents two YANG 1.1 <xref target="RFC7950"/> modules: the first defines a minimal
+      <t>This document primarily presents two YANG 1.1 <xref target="RFC7950"/> modules: the first defines a minimal
         grouping for configuring an HTTP client, and the second defines
         a minimal grouping for configuring an HTTP server.  It is
         intended that these groupings will be used to help define the
-        configuration for simple HTTP-based protocols.</t>
+        configuration for simple HTTP-based protocols.  This document
+        additionally presents a third YANG module, to define a grouping
+        for URIs.</t>
 
 INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
 
@@ -383,9 +386,80 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
       </section>
     </section>
 
+    <section anchor="uri-model" title="The &quot;ietf-uri&quot; Module">
+
+      <t>This section defines a YANG 1.1 module called "ietf-uri".  A high-level
+        overview of the module is provided in <xref target="uri-overview"/>.
+        Examples illustrating the module's use are provided in <xref target="uri-examples"/>.
+        The YANG module itself is defined in <xref target="uri-yang-module"/>.</t>
+
+      <section title="Data Model Overview" anchor="uri-overview">
+
+        <t>This section provides an overview of the "ietf-uri" module, which
+          defines a single grouping called "uri" presenting a data model
+          for the URI defined in <relref section="3" target="RFC3986"/>.</t>
+
+        <section title="The &quot;uri&quot; Grouping" anchor="uri-grouping">
+          <t>The following tree diagram <xref target="RFC8340"/> illustrates the
+            "uri" grouping:</t>
+          <t>
+            <figure>
+             <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/tree-uri.no-expand.txt)
+]]></artwork>
+            </figure>
+          </t>
+        </section>
+
+        <section title="Protocol-accessible Nodes" toc="exclude">
+          <t>The "ietf-uri" module defines only a "grouping" statement that is
+          used by other modules to instantiate protocol-accessible nodes.  This
+          module, when implemented, does not define any protocol-accessible nodes.</t>
+        </section>
+
+      </section>
+
+      <section title="Example Usage" anchor="uri-examples">
+        <t>This section presents two examples showing the uri grouping
+          populated with some data.</t>
+
+        <t>The first example illustrates the case where the URI represents
+          the string "https://example.com".</t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-uri-complex.xml)
+]]></artwork>
+          </figure>
+        </t>
+        <t>The second example illustrates the case where the URI represents
+        the string "https://user:pass@example.com:443/foo/bar?query#fragment".</t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-uri-simple.xml)
+]]></artwork>
+          </figure>
+        </t>
+      </section>
+
+      <section anchor="uri-yang-module" title="YANG Module">
+        <t>This YANG module has references to <xref target="RFC3986"/>,
+        <xref target="RFC6991"/> and <xref target="RFC8341"/>.</t>
+        <t>
+          <figure>
+            <preamble>&lt;CODE BEGINS&gt; file "ietf-uri@YYYY-MM-DD.yang"</preamble>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ietf-uri@YYYY-MM-DD.yang)
+]]></artwork>
+            <postamble>&lt;CODE ENDS&gt;</postamble>
+          </figure>
+        </t>
+      </section>
+    </section>
     <section title="Security Considerations">
 
-      <t>The two YANG modules in this document define groupings and will
+      <t>The three YANG modules in this document define groupings and will
         not be deployed as standalone modules. Their security implications
         may be context dependent based on their use in other modules.  The
         designers of modules which import these grouping must conduct their
@@ -415,32 +489,11 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
           for information as to which nodes may be considered sensitive
           or vulnerable in network environments.</t>
 
-        <t>Some of the readable data nodes defined in this YANG module,
-          i.e., excluding imported modules, may be considered sensitive
-          or vulnerable in some network environments. It is thus important
-          to control read access to these data nodes. The following data
-          nodes have particular sensitivity/vulnerability:
-          <list style="symbols">
-            <t>The "uri" node:
-              <ul empty="true">
-                <li>The "uri" node may encode a cleartext password (basic
-                  or digest authentication).  For this reason, the NACM
-                  extension "default-deny-all" was applied to it.</li>
-              </ul>
-            </t>
-<!--
-            <t>The "proxy-connect/uri" node:
-              <ul empty="true">
-                <li>The "proxy-connect/uri" node may encode a cleartext password (basic
-                  or digest authentication).  For this reason, the NACM
-                  extension "default-deny-all" was applied to it.</li>
-              </ul>
-            </t>
--->
-          </list>
-        </t>
+        <t>None of the readable data nodes defined in this YANG module,
+          i.e., excluding imported modules, are considered sensitive
+          or vulnerable in some network environments.</t>
 
-        <t>The follwing writable data nodes defined in this YANG module, i.e.,
+        <t>The following writable data nodes defined in this YANG module, i.e.,
           excluding imported modules, are considered sensitive or vulnerable
           in network environments:
           <list style="symbols">
@@ -487,7 +540,7 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
           The NACM "default-deny-all" extension has not been set for
           any data nodes defined in this module.</t>
 
-        <t>The follwing writable data nodes defined in this YANG module,
+        <t>The following writable data nodes defined in this YANG module,
           i.e., excluding imported modules, are considered sensitive or
           vulnerable in network environments:
           <list style="symbols">
@@ -513,6 +566,56 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
         <t>This module does not define any RPCs, actions, or notifications,
           and thus the security consideration for such is not provided here.</t>
       </section>
+
+
+      <section title="Considerations for the &quot;ietf-http-client&quot; YANG Module">
+        <t>This section is modeled after the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
+
+        <t>The "ietf-http-client" YANG module defines data nodes
+          that are designed to be accessed via YANG-based management
+          protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
+          <xref target="RFC8040"/>.  The YANG-based management protocols
+          have to use a secure transport layer such as SSH <xref target="RFC4252"/>,
+          TLS <xref target="RFC8446"/>, or QUIC <xref target="RFC9000"/>.
+          The YANG-based management protocols also have to use mutual
+          authentication.</t>
+
+        <t>The Network Access Control Model (NACM) <xref target="RFC8341"/>
+          provides the means to restrict access for particular users to a
+          pre-configured subset of all available protocol operations and
+          content.</t>
+
+        <t>Please be aware that this YANG module uses groupings from
+          other YANG modules that define nodes that may be considered
+          sensitive or vulnerable in network environments.  Please
+          review the Security Considerations for dependent YANG modules
+          for information as to which nodes may be considered sensitive
+          or vulnerable in network environments.</t>
+
+        <t>Some of the readable data nodes defined in this YANG module,
+          i.e., excluding imported modules, may be considered sensitive
+          or vulnerable in some network environments. It is thus important
+          to control read access to these data nodes. The following data
+          nodes have particular sensitivity/vulnerability:
+          <list style="symbols">
+            <t>The "userinfo" node:
+              <ul empty="true">
+                <li>The "userinfo" node may encode a cleartext password (basic
+                  or digest authentication).  For this reason, the NACM
+                  extension "default-deny-all" was applied to it.</li>
+              </ul>
+            </t>
+          </list>
+        </t>
+
+        <t>None of the writable data nodes defined in this YANG module, i.e.,
+          excluding imported modules, are considered sensitive or vulnerable
+          in network environments.</t>
+
+        <t>This module does not define any RPCs, actions, or notifications,
+          and thus the security consideration for such is not provided here.</t>
+      </section>
+
     </section>
 
     <section title="IANA Considerations">
@@ -528,6 +631,10 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
    XML: N/A, the requested URI is an XML namespace.
 
    URI: urn:ietf:params:xml:ns:yang:ietf-http-server
+   Registrant Contact: The IESG
+   XML: N/A, the requested URI is an XML namespace.
+
+   URI: urn:ietf:params:xml:ns:yang:ietf-uri
    Registrant Contact: The IESG
    XML: N/A, the requested URI is an XML namespace.
 </artwork>
@@ -549,6 +656,12 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
    Name:         ietf-http-server
    Namespace:    urn:ietf:params:xml:ns:yang:ietf-http-server
    Prefix:       https
+   Reference:    RFC GGGG
+   Maintained by IANA:  N
+
+   Name:         ietf-uri
+   Namespace:    urn:ietf:params:xml:ns:yang:ietf-uri
+   Prefix:       uri
    Reference:    RFC GGGG
    Maintained by IANA:  N
 </artwork>
@@ -791,6 +904,20 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
         <t>   
           <list style="symbols">
             <t>Updated to reflect some of Med's AD-review comments</t>
+          </list>
+        </t> 
+      </section>
+      <section title="26 to 27">
+        <t>   
+          <list style="symbols">
+            <t>Added ability for HTTP server's to also limit what HTTP versions are supported.</t>
+          </list>
+        </t> 
+      </section>
+      <section title="27 to 28">
+        <t>   
+          <list style="symbols">
+            <t>Factored the "uri" node into a grouping defined in another module.</t>
           </list>
         </t> 
       </section>

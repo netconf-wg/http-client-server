@@ -59,6 +59,7 @@ download_modules_from_github() {
 set_local_modules() {
 
     modules=(
+        ../ietf-uri
         ../ietf-http-client
         ../ietf-http-server
     )

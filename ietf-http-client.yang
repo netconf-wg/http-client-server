@@ -117,6 +117,7 @@ module ietf-http-client {
       "RFC 9643: YANG Groupings for TCP Clients and TCP Servers";
 
     container uri {
+      must "scheme != 'https' or ../tls-client-parameters";
       description
         "The URI, described in Section 3 of RFC 3986, the HTTP client
          establishes a connection to.";
@@ -167,18 +168,11 @@ module ietf-http-client {
 
     container tls-client-parameters {
       if-feature tls-supported;
+      presence
+        "Indicates that TLS-client parameters have been configured.";
       description
-        "TLS client parameters, in case the URI scheme indicates
-         the need for TLS.";
-      uses tlsc:tls-client-grouping {
-        refine server-authentication {
-          presence
-            "Indicates that TLS-client parameters have been
-             configured. This statement is present so the
-             mandatory descendant nodes do not imply that
-             this node must be configured.";
-        }
-      }
+        "TLS client parameters for 'https' connections.";
+      uses tlsc:tls-client-grouping;
     }
 
     container proxy-connect {

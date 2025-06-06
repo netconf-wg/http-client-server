@@ -3,11 +3,11 @@
 
 <http-client xmlns="urn:ietf:params:xml:ns:yang:ietf-http-client">
   <uri>
-    <scheme>https</scheme>
+    <scheme>http</scheme>
     <authority>
-      <userinfo>user:pass</userinfo>
+      <userinfo>user</userinfo>
       <host>example.com</host>
-      <port>443</port>
+      <port>80</port>
     </authority>
     <path>/foo/bar</path>
     <query>query</query>

@@ -568,10 +568,10 @@ INSERT_TEXT_FROM_FILE(refs/ietf-uri@YYYY-MM-DD.yang)
       </section>
 
 
-      <section title="Considerations for the &quot;ietf-http-client&quot; YANG Module">
+      <section title="Considerations for the &quot;ietf-uri&quot; YANG Module">
         <t>This section is modeled after the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
 
-        <t>The "ietf-http-client" YANG module defines data nodes
+        <t>The "ietf-uri" YANG module defines data nodes
           that are designed to be accessed via YANG-based management
           protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
           <xref target="RFC8040"/>.  The YANG-based management protocols
@@ -584,13 +584,6 @@ INSERT_TEXT_FROM_FILE(refs/ietf-uri@YYYY-MM-DD.yang)
           provides the means to restrict access for particular users to a
           pre-configured subset of all available protocol operations and
           content.</t>
-
-        <t>Please be aware that this YANG module uses groupings from
-          other YANG modules that define nodes that may be considered
-          sensitive or vulnerable in network environments.  Please
-          review the Security Considerations for dependent YANG modules
-          for information as to which nodes may be considered sensitive
-          or vulnerable in network environments.</t>
 
         <t>Some of the readable data nodes defined in this YANG module,
           i.e., excluding imported modules, may be considered sensitive

@@ -59,6 +59,7 @@ download_modules_from_github() {
 set_local_modules() {
 
     modules=(
+        ../iana-http-versions
         ../ietf-uri
         ../ietf-http-client
         ../ietf-http-server

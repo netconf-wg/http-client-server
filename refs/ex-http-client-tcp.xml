@@ -13,4 +13,13 @@
     <query>query</query>
     <fragment>fragment</fragment>
   </uri>
+  <protocol-versions>
+    <protocol-version>HTTP/2 over TCP</protocol-version>
+  </protocol-versions>
+  <supported-versions>
+    <supported-version>HTTP/1.1</supported-version>
+    <supported-version>HTTP/2 over TCP</supported-version>
+    <supported-version>HTTP/2 over TLS</supported-version>
+    <supported-version>HTTP/3</supported-version>
+  </supported-versions>
 </http-client>

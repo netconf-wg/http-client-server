@@ -21,6 +21,12 @@ module ietf-http-client {
       "RFC GGGG: YANG Groupings for HTTP Clients and HTTP Servers";
   }
 
+  import iana-http-versions {
+    prefix httpv;
+    reference
+      "RFC GGGG: YANG Groupings for HTTP Clients and HTTP Servers";
+  }
+
   organization
     "IETF NETCONF (Network Configuration) Working Group";
 
@@ -63,39 +69,6 @@ module ietf-http-client {
 
   // Features
 
-  feature tls-supported {
-    description
-      "Indicates that the server supports configuring
-       HTTP client certificates.";
-    reference
-      "RFC 9110: HTTP Semantics";
-  }
-
-  feature http1-supported {
-    description
-      "Indicates that the server supports configuring
-       clients to use the HTTP/1.1 protocol.";
-    reference
-      "RFC 9112: HTTP/1.1";
-  }
-
-  feature http2-supported {
-    description
-      "Indicates that the server supports configuring
-       clients to use the HTTP/2 protocol.";
-    reference
-      "RFC 9113: HTTP/2";
-  }
-
-  feature http3-supported {
-    if-feature tls-supported;
-    description
-      "Indicates that the server supports configuring
-       clients to use the HTTP/3 protocol.";
-    reference
-      "RFC 9114: HTTP/3";
-  }
-
   feature proxy-connect {
     description
       "Indicates that the server supports configuring HTTP
@@ -105,7 +78,13 @@ module ietf-http-client {
       "RFC 9110: HTTP Semantics";
   }
 
-  // Grouping
+  feature version-discovery {
+    description
+      "Indicates that the server implements the discovery for
+       which HTTP versions are supported for HTTP clients.";
+  }
+
+  // Groupings
 
   grouping http-client-grouping {
     description
@@ -128,46 +107,21 @@ module ietf-http-client {
 
     container protocol-versions {
       presence
-        "If unconfigured, then all versions are supported.";
+        "If unconfigured, all supported HTTP versions are
+         acceptable.";
       description
-        "HTTP protocol versions the client supports.";
-      typedef min-max-typedef {
-        type enumeration {
-          enum "HTTP/1" {
-            if-feature http1-supported;
-            description
-              "Indicates that 'HTTP/1' has been configured.";
-          }
-          enum "HTTP/2" {
-            if-feature http2-supported;
-            description
-              "Indicates that 'HTTP/2' has been configured.";
-          }
-          enum "HTTP/3" {
-            if-feature http3-supported;
-            description
-              "Indicates that 'HTTP/3' has been configured.";
-          }
-        }
+        "HTTP protocol versions the client accepts.";
+      leaf-list protocol-version {
+        type httpv:http-protocol-version;
+        min-elements 1;
         description
-          "A typedef used by the 'min' and 'max' leafs.";
+          "Indicates that the client is configured to support
+           this HTTP version.  The value must be one of the
+           'supported-versions' values.";
       }
-      leaf min {
-        type min-max-typedef;
-        mandatory true;
-        description
-          "The minimum protocol version supported.";
-      }
-      leaf max {
-        type min-max-typedef;
-        mandatory true;
-        description
-          "The maximum protocol version supported.";
-      }
-    }
+    } // container protocol-versions
 
     container tls-client-parameters {
-      if-feature tls-supported;
       presence
         "Indicates that TLS-client parameters have been configured.";
       description
@@ -187,14 +141,16 @@ module ietf-http-client {
           enum CONNECT {
             description
               "Use the 'CONNECT' method described in Section 9.3.6
-               of RFC 9110.";
+               of RFC 9110.  This option is availble for HTTP/2 and
+               earlier.";
             reference
               "RFC 9110: HTTP Semantics";
           }
           enum CONNECT-UDP {
             description
               "Use the 'connect-udp' upgrade token described in
-               Section 3 of RFC 9298.";
+               Section 3 of RFC 9298.  This option is available
+               starting with HTTP/3.";
             reference
               "RFC 9298: Proxying UDP in HTTP";
           }
@@ -222,5 +178,20 @@ module ietf-http-client {
           "RFC 3986  URI Generic Syntax";
       }
     }
-  }
+
+    container supported-versions {
+      if-feature "version-discovery";
+      config false;
+      description
+        "A container for a list of HTTP protocol versions supported
+         by the client.";
+      leaf-list supported-version {
+        type httpv:http-protocol-version;
+        description
+          "An HTTP protocol version supported by the client.";
+      }
+    }
+
+  } // http-client-grouping
+
 }

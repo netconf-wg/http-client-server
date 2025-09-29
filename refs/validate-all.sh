@@ -53,7 +53,7 @@ printf "Testing ex-http-client-tcp.xml..."
 name=`ls -1 ietf-http-client\@*.yang`
 cp $name $name.sav
 sed 's/^}/container http-client { uses http-client-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
-command="yanglint $name ex-http-client-tcp.xml"
+command="yanglint -t data iana-http-versions@*.yang $name ex-http-client-tcp.xml"
 run_unix_cmd $LINENO "$command" 0
 mv $name.sav $name
 printf "okay.\n"
@@ -62,7 +62,7 @@ printf "Testing ex-http-client-tls.xml..."
 name=`ls -1 ietf-http-client\@*.yang`
 cp $name $name.sav
 sed 's/^}/container http-client { uses http-client-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
-command="yanglint -m ietf-crypto-types@*.yang ietf-truststore@*.yang ietf-keystore@*.yang ietf-tls-common@*.yang ietf-tls-client@*.yang $name ex-http-client-tls.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
+command="yanglint -t data -m ietf-crypto-types@*.yang ietf-truststore@*.yang ietf-keystore@*.yang ietf-tls-common@*.yang ietf-tls-client@*.yang iana-http-versions@*.yang $name ex-http-client-tls.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
 run_unix_cmd $LINENO "$command" 0
 mv $name.sav $name
 printf "okay.\n"
@@ -71,7 +71,7 @@ printf "Testing ex-http-client-proxy.xml..."
 name=`ls -1 ietf-http-client\@*.yang`
 cp $name $name.sav
 sed 's/^}/container http-client { uses http-client-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
-command="yanglint -m ietf-crypto-types@*.yang ietf-truststore@*.yang ietf-keystore@*.yang ietf-tls-common@*.yang ietf-tls-client@*.yang $name ex-http-client-proxy.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
+command="yanglint -t data -m ietf-crypto-types@*.yang ietf-truststore@*.yang ietf-keystore@*.yang ietf-tls-common@*.yang ietf-tls-client@*.yang $name ex-http-client-proxy.xml ../../trust-anchors/refs/ex-truststore.xml ../../keystore/refs/ex-keystore.xml"
 run_unix_cmd $LINENO "$command" 0
 mv $name.sav $name
 printf "okay.\n"
@@ -80,7 +80,7 @@ printf "Testing ex-http-server.xml..."
 name=`ls -1 ietf-http-server\@*.yang`
 cp $name $name.sav
 sed 's/^}/container http-server { uses http-server-grouping; }}/' $name > $name.tmp && mv $name.tmp $name
-command="yanglint $name ex-http-server.xml"
+command="yanglint -t data $name ex-http-server.xml"
 run_unix_cmd $LINENO "$command" 0
 mv $name.sav $name
 printf "okay.\n"

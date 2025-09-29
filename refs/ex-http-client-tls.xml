@@ -14,9 +14,15 @@
     <fragment>fragment</fragment>
   </uri>
   <protocol-versions>
-    <min>HTTP/1</min>
-    <max>HTTP/3</max>
+    <protocol-version>HTTP/1.1</protocol-version>
+    <protocol-version>HTTP/3</protocol-version>
   </protocol-versions>
+  <supported-versions>
+    <supported-version>HTTP/1.1</supported-version>
+    <supported-version>HTTP/2 over TCP</supported-version>
+    <supported-version>HTTP/2 over TLS</supported-version>
+    <supported-version>HTTP/3</supported-version>
+  </supported-versions>
   <tls-client-parameters>
     <client-identity>
       <certificate>

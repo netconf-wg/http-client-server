@@ -3,4 +3,14 @@
 
 <http-server xmlns="urn:ietf:params:xml:ns:yang:ietf-http-server">
   <server-name>foo.example.com</server-name>
+  <protocol-versions>
+    <protocol-version>HTTP/1.1</protocol-version>
+    <protocol-version>HTTP/3</protocol-version>
+  </protocol-versions>
+  <supported-versions>
+    <supported-version>HTTP/1.1</supported-version>
+    <supported-version>HTTP/2 over TCP</supported-version>
+    <supported-version>HTTP/2 over TLS</supported-version>
+    <supported-version>HTTP/3</supported-version>
+  </supported-versions>
 </http-server>

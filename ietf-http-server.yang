@@ -39,6 +39,12 @@ module ietf-http-server {
       "RFC JJJJ: YANG Groupings for UDP Clients and UDP Servers";
   }
 
+  import iana-http-versions {
+    prefix httpv;
+    reference
+      "RFC GGGG: YANG Groupings for HTTP Clients and HTTP Servers";
+  }
+
   organization
     "IETF NETCONF (Network Configuration) Working Group";
 
@@ -131,29 +137,10 @@ module ietf-http-server {
       "RFC 9114: HTTP/3";
   }
 
-  feature http1-supported {
+  feature version-discovery {
     description
-      "Indicates that the server supports configuring
-       clients to use the HTTP/1.1 protocol.";
-    reference
-      "RFC 9112: HTTP/1.1";
-  }
-
-  feature http2-supported {
-    description
-      "Indicates that the server supports configuring
-       clients to use the HTTP/2 protocol.";
-    reference
-      "RFC 9113: HTTP/2";
-  }
-
-  feature http3-supported {
-    if-feature tls-supported;
-    description
-      "Indicates that the server supports configuring
-       clients to use the HTTP/3 protocol.";
-    reference
-      "RFC 9114: HTTP/3";
+      "Indicates that the server implements the discovery for
+       which HTTP versions are supported for HTTP servers.";
   }
 
   // Groupings
@@ -246,7 +233,37 @@ module ietf-http-server {
           }
         }
       }
-    } // container client-authentication
+    }
+
+    container protocol-versions {
+      presence
+        "If unconfigured, all supported HTTP versions are
+         acceptable.";
+      description
+        "HTTP protocol versions the server accepts.";
+      leaf-list protocol-version {
+        type httpv:http-protocol-version;
+        min-elements 1;
+        description
+          "Indicates that the server is configured to support
+           this HTTP version.  The value must be one of the
+           'supported-versions' values.";
+      }
+    }
+
+    container supported-versions {
+      if-feature "version-discovery";
+      config false;
+      description
+        "A container for a list of HTTP protocol versions supported
+         by the server.";
+      leaf-list supported-version {
+        type httpv:http-protocol-version;
+        description
+          "An HTTP protocol version supported by the server.";
+      }
+    }
+
   } // grouping http-server-grouping
 
 
@@ -259,7 +276,6 @@ module ietf-http-server {
       description
         "Choice amongst various transports type.";
       case http-over-tcp {
-        if-feature "tcp-supported";
         container http-over-tcp {
           description
             "Container for TCP-based HTTP/1 or HTTP/2 protocols.";
@@ -286,7 +302,6 @@ module ietf-http-server {
         }
       }
       case http-over-tls {
-        if-feature "tls-supported";
         container http-over-tls {
           description
             "Container for TLS-based HTTP/1 or HTTP/2 protocols.";
@@ -319,7 +334,6 @@ module ietf-http-server {
         }
       }
       case http-over-quic {
-        if-feature "quic-supported";
         container http-over-quic {
           description
             "Container for the QUIC-based HTTP/3 protocol.";
@@ -341,45 +355,7 @@ module ietf-http-server {
         }
       }
     }
-    container protocol-versions {
-      presence
-        "If unconfigured, then all versions are supported.";
-      description
-        "HTTP protocol versions the client supports.";
-      typedef min-max-typedef {
-        type enumeration {
-          enum "HTTP/1" {
-            if-feature http1-supported;
-            description
-              "Indicates that 'HTTP/1' has been configured.";
-          }
-          enum "HTTP/2" {
-            if-feature http2-supported;
-            description
-              "Indicates that 'HTTP/2' has been configured.";
-          }
-          enum "HTTP/3" {
-            if-feature http3-supported;
-            description
-              "Indicates that 'HTTP/3' has been configured.";
-          }
-        }
-        description
-          "A typedef used by the 'min' and 'max' leafs.";
-      }
-      leaf min {
-        type min-max-typedef;
-        mandatory true;
-        description
-          "The minimum protocol version supported.";
-      }
-      leaf max {
-        type min-max-typedef;
-        mandatory true;
-        description
-          "The maximum protocol version supported.";
-      }
-    }
   } // http-server-listen-stack-grouping
 
 }
+

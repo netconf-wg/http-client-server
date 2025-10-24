@@ -19,6 +19,16 @@ run_unix_cmd() {
   fi
 }
 
+printf "Testing iana-http-versions.yang (pyang)..."
+command="pyang -Werror --ietf --max-line-length=69 iana-http-versions\@*.yang"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+
+printf "Testing iana-http-versions.yang (yanglint)..."
+command="yanglint iana-http-versions\@*.yang"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+
 printf "Testing ietf-uri.yang (pyang)..."
 command="pyang -Werror --ietf --max-line-length=69 ietf-uri\@*.yang"
 run_unix_cmd $LINENO "$command" 0

@@ -762,9 +762,11 @@ revision yyyy-mm-dd {
         <section title='Recommended Initial Version for the "iana-http-versions" YANG Module' removeInRFC="true">
           <t>
             <figure>
-             <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(iana-http-versions.yang,150)
+            <preamble>&lt;CODE BEGINS&gt; file "iana-http-versions@YYYY-MM-DD.yang"</preamble>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/iana-http-versions@YYYY-MM-DD.yang)
 ]]></artwork>
+            <postamble>&lt;CODE ENDS&gt;</postamble>
             </figure>
           </t>
         </section>

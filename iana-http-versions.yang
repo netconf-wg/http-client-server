@@ -90,6 +90,8 @@ module iana-http-versions {
           "RFC 9114: HTTP/3";
       }
     }
+    description
+      "An enumeration for HTTP protocol versions.";
   }
 
 }

@@ -141,16 +141,14 @@ module ietf-http-client {
           enum CONNECT {
             description
               "Use the 'CONNECT' method described in Section 9.3.6
-               of RFC 9110.  This option is availble for HTTP/2 and
-               earlier.";
+               of RFC 9110.";
             reference
               "RFC 9110: HTTP Semantics";
           }
           enum CONNECT-UDP {
             description
               "Use the 'connect-udp' upgrade token described in
-               Section 3 of RFC 9298.  This option is available
-               starting with HTTP/3.";
+               Section 3 of RFC 9298.";
             reference
               "RFC 9298: Proxying UDP in HTTP";
           }

@@ -99,7 +99,7 @@
           'uri' type defined in <xref target="RFC6991"/>.</li>
         <li>The 'ietf-http-client' module defines a YANG 'grouping' for configuring an
           HTTP client's ability to communicate with an HTTP service endpoint.  Unlike
-          other groupings in the suite a "client-server" drafts mentioned in
+          other groupings in the suite of "client-server" drafts mentioned in
           <xref target="collective-effort"/>, this client grouping is not intended
           to be used in conjunction with others to define a complete protocol stack.
           This is due to the "uri" node encoding configuration for lower protocol
@@ -210,7 +210,7 @@ INSERT_TEXT_FROM_FILE(refs/ietf-uri@YYYY-MM-DD.yang)
       <t>This section describes a YANG 1.1 module called "ietf-http-client".  This module
       defines a YANG grouping called "http-client-grouping" for configuring an HTTP client's
       ability to communicate with an HTTP service endpoint.  Unlike other groupings in
-      the suite a "client-server" drafts mentioned in <xref target="collective-effort"/>,
+      the suite of "client-server" drafts mentioned in <xref target="collective-effort"/>,
       this grouping is not intended to be used in conjunction with others to define a
       complete protocol stack.  This is due to the "uri" node encoding configuration
       for lower protocol stack layers.  For instance, the "scheme" and "authority" parts
@@ -265,7 +265,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-http-client-grouping.no-expand.txt)
                 mandatory part of the "http-client-grouping" grouping.</li>
               <li>The optional 'supported-versions' node indicates which
                 HTTP protocol versions are supported by the implementation,
-                such as it may be limited by libraries used.</li>
+                independent of current configuration.</li>
               <li>The optional 'protocol-versions' node specifies the HTTP
                 protocol versions the client is configured to allow, such
                 as may be constrained by local policy.</li>
@@ -1058,6 +1058,13 @@ INSERT_TEXT_FROM_FILE(refs/iana-http-versions@YYYY-MM-DD.yang)
               is defined per use (not globally), which is actually very cool,
               as it enables various parts of the data tree to express support
               for different HTTP versions.</t>
+          </list>
+        </t>
+      </section>
+      <section title="29 to 30">
+        <t>
+          <list style="symbols">
+            <t>Addressed Mike Bishop's comments and nits.</t>
           </list>
         </t>
       </section>

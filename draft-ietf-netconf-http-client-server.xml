@@ -954,10 +954,12 @@ INSERT_TEXT_FROM_FILE(refs/iana-http-versions@YYYY-MM-DD.yang)
       <t>The authors would like to thank the following for lively discussions
         on list and in the halls (ordered by first name):
           Ben Schwartz,
+          Dale Worley,
           Darrel Miller,
           Éric Vyncke,
           Francesca Palombini,
           Mark Nottingham,
+          Martin Thomson,
           Mahesh Jethanandani,
           Med Boucladair,
           Mike Bishop,
@@ -967,6 +969,7 @@ INSERT_TEXT_FROM_FILE(refs/iana-http-versions@YYYY-MM-DD.yang)
           Robert Varga,
           Roman Danyliw,
           Shivan Sahib,
+          Tim Bray,
           Willy Tarreau,
           and Zaheduzzaman Sarker.
       </t>

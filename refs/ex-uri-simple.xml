@@ -1,9 +1,0 @@
-<!-- The outermost element below doesn't exist in the data model. -->
-<!-- It simulates if the "grouping" were a "container" instead.  -->
-
-<uri xmlns="urn:ietf:params:xml:ns:yang:ietf-uri">
-  <scheme>https</scheme>
-  <authority>
-    <host>example.com</host>
-  </authority>
-</uri>

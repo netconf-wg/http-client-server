@@ -21,7 +21,7 @@ module iana-http-versions {
      (ALPN) Protocol IDs' sub-registry of the 'Transport Layer
      Security (TLS) Extensions' registry maintained by IANA.
 
-     Copyright (c) 2025 IETF Trust and the persons identified as
+     Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with

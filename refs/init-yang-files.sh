@@ -60,7 +60,6 @@ set_local_modules() {
 
     modules=(
         ../iana-http-versions
-        ../ietf-uri
         ../ietf-http-client
         ../ietf-http-server
     )

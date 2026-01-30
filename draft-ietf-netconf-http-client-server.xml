@@ -573,8 +573,8 @@ INSERT_TEXT_FROM_FILE(refs/ietf-http-server@YYYY-MM-DD.yang)
         target="RFC6020"/>, the following registrations are requested:</t>
         <t><figure>
             <artwork>
-   Name:         ietf-http-versions
-   Namespace:    urn:ietf:params:xml:ns:yang:ietf-http-versions
+   Name:         iana-http-versions
+   Namespace:    urn:ietf:params:xml:ns:yang:iana-http-versions
    Prefix:       httpv
    Reference:    RFC GGGG
    Maintained by IANA:  Y
